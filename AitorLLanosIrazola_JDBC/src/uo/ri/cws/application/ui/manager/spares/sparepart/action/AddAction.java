@@ -13,11 +13,11 @@ public class AddAction implements Action {
 		SparePartDto dto = new SparePartDto();
 		
 		Console.println("Please, provide the following data: ");
-		dto.code = Console.readString("Code: ");
-		dto.description = Console.readString("Description: ");
-		dto.stock = Console.readInt("Current stock: ");
-		dto.minStock = Console.readInt("Minimum stock: ");
-		dto.maxStock = Console.readInt("Maximum stock: ");
+		dto.code = Console.readString("Code ");
+		dto.description = Console.readString("Description ");
+		dto.stock = Console.readInt("Current stock ");
+		dto.minStock = Console.readInt("Minimum stock ");
+		dto.maxStock = Console.readInt("Maximum stock ");
 		dto.price = Console.readDouble("Price: ");
 		
 		SparePartCrudService service = BusinessFactory.forSparePartCrudService();

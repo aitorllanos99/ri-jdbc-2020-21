@@ -8,8 +8,10 @@ import java.util.Optional;
 
 import uo.ri.cws.application.business.invoice.InvoiceDto;
 import uo.ri.cws.application.business.mechanic.MechanicDto;
+import uo.ri.cws.application.business.sparePart.SparePartDto;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
+import uo.ri.cws.application.persistence.sparepart.SparePartRecord;
 
 public class DtoMapper {
 
@@ -23,20 +25,20 @@ public class DtoMapper {
 	}
 
 	public static Optional<MechanicDto> toDto(Optional<MechanicRecord> arg) {
-		Optional<MechanicDto> result = arg.isEmpty()?Optional.ofNullable(null)
-				:Optional.ofNullable(toDto(arg.get().id, arg.get().dni, arg.get().name, arg.get().surname));
+		Optional<MechanicDto> result = arg.isEmpty() ? Optional.ofNullable(null)
+				: Optional.ofNullable(toDto(arg.get().id, arg.get().dni, arg.get().name, arg.get().surname));
 		return result;
 	}
 
 	public static List<MechanicDto> toDtoList(List<MechanicRecord> arg) {
-		List<MechanicDto> result = new ArrayList<MechanicDto> ();
-		for (MechanicRecord mr : arg) 
+		List<MechanicDto> result = new ArrayList<MechanicDto>();
+		for (MechanicRecord mr : arg)
 			result.add(toDto(mr.id, mr.dni, mr.name, mr.surname));
 		return result;
 	}
 
 	public static MechanicRecord toRecord(MechanicDto arg) {
-		MechanicRecord result = new MechanicRecord ();
+		MechanicRecord result = new MechanicRecord();
 		result.id = arg.id;
 		result.dni = arg.dni;
 		result.name = arg.name;
@@ -54,4 +56,17 @@ public class DtoMapper {
 		result.vat = arg.vat;
 		return result;
 	}
+
+	public static SparePartRecord toRecord(SparePartDto arg) {
+		SparePartRecord result = new SparePartRecord();
+		result.id = arg.id;
+		result.code = arg.code;
+		result.description = arg.description;
+		result.stock = arg.stock;
+		result.minStock = arg.minStock;
+		result.maxStock = arg.maxStock;
+		result.price = arg.price;
+		return result;
+	}
+
 }

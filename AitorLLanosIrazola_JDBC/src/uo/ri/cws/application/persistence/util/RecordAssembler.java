@@ -8,6 +8,7 @@ import java.util.List;
 import uo.ri.cws.application.persistence.intervention.InterventionRecord;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
+import uo.ri.cws.application.persistence.sparepart.SparePartRecord;
 import uo.ri.cws.application.persistence.workorder.WorkOrderRecord;
 
 public class RecordAssembler {
@@ -84,6 +85,31 @@ public class RecordAssembler {
 		result.minutes = rs.getInt("minutes");
 		return result;
 		
+	}
+	
+	public static SparePartRecord toSparePartRecord ( ResultSet rs ) throws SQLException {
+		SparePartRecord result = new SparePartRecord();
+		
+		result.id = rs.getString("id");
+		result.code = rs.getString( "code");
+		result.description = rs.getString( "description");
+		result.maxStock = rs.getInt( "maxStock");
+		result.minStock = rs.getInt("minStock");
+		result.price = rs.getInt( "price");
+		result.stock = rs.getInt("stock");
+
+		
+		
+		return result;
+		
+	}
+
+	public static List<SparePartRecord> toSparePartRecordList(ResultSet rs) throws SQLException {
+		List<SparePartRecord> res = new ArrayList<>();
+		while(rs.next()) {
+			res.add( toSparePartRecord( rs ) );
+		}
+		return res;
 	}
 
 }
