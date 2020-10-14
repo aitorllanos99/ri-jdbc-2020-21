@@ -10,6 +10,7 @@ import uo.ri.cws.application.business.order.OrdersService;
 import uo.ri.cws.application.business.provider.ProvidersCrudService;
 import uo.ri.cws.application.business.sparePart.SparePartCrudService;
 import uo.ri.cws.application.business.sparePart.SparePartReportService;
+import uo.ri.cws.application.business.sparePart.crud.SparePartCrudServiceImpl;
 import uo.ri.cws.application.business.supply.SuppliesCrudService;
 
 public class BusinessFactory {
@@ -23,7 +24,7 @@ public class BusinessFactory {
 	return new InvoicingServiceImpl();
 	}
 	public static SparePartCrudService forSparePartCrudService() {
-		throw new RuntimeException("Not yet implemented");
+		return new SparePartCrudServiceImpl();
 	}
 
 	public static OrdersService forOrdersService() {
