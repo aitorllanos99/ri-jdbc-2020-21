@@ -135,4 +135,23 @@ public class SparePartGatewayImpl implements SparePartGateway {
 		}
 	}
 
+	@Override
+	public List<SparePartRecord> findByDescritpion(String description) throws SQLException {
+		Connection c = null;
+		PreparedStatement pst = null;
+		List<SparePartRecord> list = null;
+		try {
+			c = Jdbc.getCurrentConnection();
+
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TSPAREPARTS_FINDBYDESCRIPTION"));
+
+			list = RecordAssembler.toSparePartRecordList(pst.executeQuery());
+			return list;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(pst);
+		}
+	}
+
 }

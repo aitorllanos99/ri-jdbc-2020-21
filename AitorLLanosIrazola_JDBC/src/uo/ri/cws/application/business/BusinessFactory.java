@@ -11,6 +11,7 @@ import uo.ri.cws.application.business.provider.ProvidersCrudService;
 import uo.ri.cws.application.business.sparePart.SparePartCrudService;
 import uo.ri.cws.application.business.sparePart.SparePartReportService;
 import uo.ri.cws.application.business.sparePart.crud.SparePartCrudServiceImpl;
+import uo.ri.cws.application.business.sparePart.report.SparePartReportServiceImpl;
 import uo.ri.cws.application.business.supply.SuppliesCrudService;
 
 public class BusinessFactory {
@@ -43,8 +44,7 @@ public class BusinessFactory {
 	}
 
 	public static SparePartReportService forSparePartReportService() {
-		// TODO Auto-generated method stub
-		return null;
+		return new SparePartReportServiceImpl();
 	}
 
 

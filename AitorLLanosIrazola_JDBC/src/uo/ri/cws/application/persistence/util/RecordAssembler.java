@@ -87,7 +87,7 @@ public class RecordAssembler {
 		
 	}
 	
-	public static SparePartRecord toSparePartRecord ( ResultSet rs ) throws SQLException {
+	public static SparePartRecord toSparePartRecord( ResultSet rs ) throws SQLException {
 		SparePartRecord result = new SparePartRecord();
 		
 		result.id = rs.getString("id");
@@ -97,11 +97,7 @@ public class RecordAssembler {
 		result.minStock = rs.getInt("minStock");
 		result.price = rs.getInt( "price");
 		result.stock = rs.getInt("stock");
-
-		
-		
 		return result;
-		
 	}
 
 	public static List<SparePartRecord> toSparePartRecordList(ResultSet rs) throws SQLException {

@@ -9,6 +9,7 @@ import java.util.Optional;
 import uo.ri.cws.application.business.invoice.InvoiceDto;
 import uo.ri.cws.application.business.mechanic.MechanicDto;
 import uo.ri.cws.application.business.sparePart.SparePartDto;
+import uo.ri.cws.application.business.sparePart.SparePartReportDto;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
 import uo.ri.cws.application.persistence.sparepart.SparePartRecord;
@@ -68,7 +69,34 @@ public class DtoMapper {
 		result.price = arg.price;
 		return result;
 	}
+	public static SparePartReportDto toDto(SparePartRecord arg) {
+		SparePartReportDto result = new SparePartReportDto();
+		result.id = arg.id;
+		result.code = arg.code;
+		result.description = arg.description;
+		result.stock = arg.stock;
+		result.minStock = arg.minStock;
+		result.maxStock = arg.maxStock;
+		result.price = arg.price;
+		return result;
+	}
 	
-
+	public static SparePartReportDto toDto(String id, String code, String description, int stock, int maxStock, int minStock, double price) {
+		SparePartReportDto result = new SparePartReportDto();
+		result.id = id;
+		result.code = code;
+		result.description = description;
+		result.stock = stock;
+		result.minStock = minStock;
+		result.maxStock = maxStock;
+		result.price = price;
+		return result;
+	}
+	public static List<SparePartReportDto> toDtoListSparePart(List<SparePartRecord> arg) {
+		List<SparePartReportDto> result = new ArrayList<SparePartReportDto>();
+		for (SparePartRecord mr : arg)
+			result.add(toDto(mr.id, mr.code, mr.description, mr.stock, mr.maxStock, mr.minStock, mr.price));
+		return result;
+	}
 
 }
