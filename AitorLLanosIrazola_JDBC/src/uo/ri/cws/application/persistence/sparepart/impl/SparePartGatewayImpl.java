@@ -75,7 +75,7 @@ public class SparePartGatewayImpl implements SparePartGateway {
 			pst.setInt(3, sparePart.maxStock);
 			pst.setInt(4, sparePart.minStock);
 			pst.setDouble(5, sparePart.price);
-
+			pst.setString(6, sparePart.code);
 			pst.executeUpdate();
 
 		} catch (SQLException e) {

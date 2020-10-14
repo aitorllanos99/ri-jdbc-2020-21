@@ -68,5 +68,7 @@ public class DtoMapper {
 		result.price = arg.price;
 		return result;
 	}
+	
+
 
 }
