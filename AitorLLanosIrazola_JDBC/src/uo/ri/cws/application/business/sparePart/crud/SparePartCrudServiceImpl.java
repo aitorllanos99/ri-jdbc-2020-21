@@ -6,6 +6,7 @@ import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.sparePart.SparePartCrudService;
 import uo.ri.cws.application.business.sparePart.SparePartDto;
 import uo.ri.cws.application.business.sparePart.crud.commands.AddSparePart;
+import uo.ri.cws.application.business.sparePart.crud.commands.DeleteSparePart;
 import uo.ri.cws.application.business.util.command.CommandExecutor;
 
 public class SparePartCrudServiceImpl implements SparePartCrudService {
@@ -18,8 +19,7 @@ public class SparePartCrudServiceImpl implements SparePartCrudService {
 
 	@Override
 	public void delete(String code) throws BusinessException {
-		// TODO Auto-generated method stub
-
+		 executor.execute(new DeleteSparePart(code));
 	}
 
 	@Override

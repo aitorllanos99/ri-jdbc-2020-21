@@ -44,13 +44,45 @@ public class SparePartGatewayImpl implements SparePartGateway {
 
 	@Override
 	public void remove(String id) throws SQLException {
-		// TODO Auto-generated method stub
+		Connection c = null;
+		PreparedStatement pst = null;
+		try {
+			c = Jdbc.getCurrentConnection();
+
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TSPAREPARTS_REMOVE"));
+			pst.setString(1, id);
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(pst);
+		}
 
 	}
 
 	@Override
-	public void update(SparePartRecord t) throws SQLException {
-		// TODO Auto-generated method stub
+	public void update(SparePartRecord sparePart) throws SQLException {
+		// Process
+		Connection c = null;
+		PreparedStatement pst = null;
+		try {
+			c = Jdbc.getCurrentConnection();
+
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TSPAREPARTS_UPDATE"));
+			pst.setString(1, sparePart.description);
+			pst.setInt(2, sparePart.stock);
+			pst.setInt(3, sparePart.maxStock);
+			pst.setInt(4, sparePart.minStock);
+			pst.setDouble(5, sparePart.price);
+
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(pst);
+		}
 
 	}
 
