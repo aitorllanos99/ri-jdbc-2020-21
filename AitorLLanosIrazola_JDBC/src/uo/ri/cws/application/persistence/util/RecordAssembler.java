@@ -103,7 +103,7 @@ public class RecordAssembler {
 	public static List<SparePartRecord> toSparePartRecordList(ResultSet rs) throws SQLException {
 		List<SparePartRecord> res = new ArrayList<>();
 		while(rs.next()) {
-			res.add( toSparePartRecord( rs ) );
+			res.add(toSparePartRecord( rs ) );
 		}
 		return res;
 	}
