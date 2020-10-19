@@ -21,4 +21,11 @@ public interface SparePartGateway extends Gateway<SparePartRecord> {
 	 */
 	List<SparePartRecord> findByDescritpion(String description) throws SQLException;
 
+	/**
+	 * @param description
+	 * @return the list of sparePartRecords identified which has lower stock than
+	 *         the minimun
+	 */
+	List<SparePartRecord> findUnderStock() throws SQLException;
+
 }

@@ -6,15 +6,16 @@ import java.util.Optional;
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.sparepart.SparePartReportDto;
 import uo.ri.cws.application.business.sparepart.SparePartReportService;
+import uo.ri.cws.application.business.sparepart.report.commands.FindByCode;
 import uo.ri.cws.application.business.sparepart.report.commands.FindByDescription;
+import uo.ri.cws.application.business.sparepart.report.commands.FindUnderStock;
 import uo.ri.cws.application.business.util.command.CommandExecutor;
 
 public class SparePartReportServiceImpl implements SparePartReportService{
 	private CommandExecutor executor = new CommandExecutor();
 	@Override
 	public Optional<SparePartReportDto> findByCode(String code) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		return executor.execute(new FindByCode(code));
 	}
 
 	@Override
@@ -24,8 +25,7 @@ public class SparePartReportServiceImpl implements SparePartReportService{
 
 	@Override
 	public List<SparePartReportDto> findUnderStock() throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		return executor.execute(new FindUnderStock());
 	}
 
 }
