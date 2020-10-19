@@ -1,4 +1,4 @@
-package uo.ri.cws.application.business.sparePart;
+package uo.ri.cws.application.business.sparepart;
 
 public class SparePartReportDto {
     public String id;

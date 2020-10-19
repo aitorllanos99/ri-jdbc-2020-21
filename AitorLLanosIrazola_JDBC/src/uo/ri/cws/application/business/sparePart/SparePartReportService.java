@@ -1,4 +1,4 @@
-package uo.ri.cws.application.business.sparePart;
+package uo.ri.cws.application.business.sparepart;
 
 import java.util.List;
 import java.util.Optional;

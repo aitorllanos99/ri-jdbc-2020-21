@@ -1,4 +1,4 @@
-package uo.ri.cws.application.business.sparePart.crud.commands;
+package uo.ri.cws.application.business.sparepart.crud.commands;
 
 import java.sql.SQLException;
 

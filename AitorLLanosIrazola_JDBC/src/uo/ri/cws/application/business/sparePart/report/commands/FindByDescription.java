@@ -1,4 +1,4 @@
-package uo.ri.cws.application.business.sparePart.report.commands;
+package uo.ri.cws.application.business.sparepart.report.commands;
 
 import java.sql.SQLException;
 import java.util.List;
