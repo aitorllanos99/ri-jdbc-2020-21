@@ -3,7 +3,7 @@ package uo.ri.cws.application.business.sparePart.crud.commands;
 import java.sql.SQLException;
 
 import uo.ri.cws.application.business.BusinessException;
-import uo.ri.cws.application.business.sparePart.SparePartDto;
+import uo.ri.cws.application.business.sparepart.SparePartDto;
 import uo.ri.cws.application.business.util.DtoMapper;
 import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;

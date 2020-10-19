@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import uo.ri.cws.application.business.BusinessException;
-import uo.ri.cws.application.business.sparePart.SparePartReportDto;
+import uo.ri.cws.application.business.sparepart.SparePartReportDto;
 import uo.ri.cws.application.business.util.DtoMapper;
 import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;

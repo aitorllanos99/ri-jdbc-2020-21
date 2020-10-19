@@ -5,8 +5,8 @@ import java.util.List;
 import alb.util.console.Console;
 import alb.util.menu.Action;
 import uo.ri.cws.application.business.BusinessFactory;
-import uo.ri.cws.application.business.sparePart.SparePartReportDto;
-import uo.ri.cws.application.business.sparePart.SparePartReportService;
+import uo.ri.cws.application.business.sparepart.SparePartReportDto;
+import uo.ri.cws.application.business.sparepart.SparePartReportService;
 import uo.ri.cws.application.ui.util.Printer;
 
 public class ListByDescriptionAction implements Action {

@@ -8,10 +8,10 @@ import uo.ri.cws.application.business.mechanic.MechanicCrudService;
 import uo.ri.cws.application.business.mechanic.crud.MechanicCrudServiceImpl;
 import uo.ri.cws.application.business.order.OrdersService;
 import uo.ri.cws.application.business.provider.ProvidersCrudService;
-import uo.ri.cws.application.business.sparePart.SparePartCrudService;
-import uo.ri.cws.application.business.sparePart.SparePartReportService;
-import uo.ri.cws.application.business.sparePart.crud.SparePartCrudServiceImpl;
-import uo.ri.cws.application.business.sparePart.report.SparePartReportServiceImpl;
+import uo.ri.cws.application.business.sparepart.SparePartCrudService;
+import uo.ri.cws.application.business.sparepart.SparePartReportService;
+import uo.ri.cws.application.business.sparepart.crud.SparePartCrudServiceImpl;
+import uo.ri.cws.application.business.sparepart.report.SparePartReportServiceImpl;
 import uo.ri.cws.application.business.supply.SuppliesCrudService;
 
 public class BusinessFactory {

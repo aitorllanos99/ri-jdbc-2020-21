@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import uo.ri.cws.application.business.BusinessException;
-import uo.ri.cws.application.business.sparePart.SparePartReportDto;
-import uo.ri.cws.application.business.sparePart.SparePartReportService;
-import uo.ri.cws.application.business.sparePart.report.commands.FindByDescription;
+import uo.ri.cws.application.business.sparepart.SparePartReportDto;
+import uo.ri.cws.application.business.sparepart.SparePartReportService;
+import uo.ri.cws.application.business.sparepart.report.commands.FindByDescription;
 import uo.ri.cws.application.business.util.command.CommandExecutor;
 
 public class SparePartReportServiceImpl implements SparePartReportService{

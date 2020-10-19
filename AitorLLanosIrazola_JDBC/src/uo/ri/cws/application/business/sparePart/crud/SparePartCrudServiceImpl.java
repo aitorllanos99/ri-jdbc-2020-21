@@ -3,11 +3,11 @@ package uo.ri.cws.application.business.sparePart.crud;
 import java.util.Optional;
 
 import uo.ri.cws.application.business.BusinessException;
-import uo.ri.cws.application.business.sparePart.SparePartCrudService;
-import uo.ri.cws.application.business.sparePart.SparePartDto;
-import uo.ri.cws.application.business.sparePart.crud.commands.AddSparePart;
-import uo.ri.cws.application.business.sparePart.crud.commands.DeleteSparePart;
-import uo.ri.cws.application.business.sparePart.crud.commands.UpdateSparePart;
+import uo.ri.cws.application.business.sparepart.SparePartCrudService;
+import uo.ri.cws.application.business.sparepart.SparePartDto;
+import uo.ri.cws.application.business.sparepart.crud.commands.AddSparePart;
+import uo.ri.cws.application.business.sparepart.crud.commands.DeleteSparePart;
+import uo.ri.cws.application.business.sparepart.crud.commands.UpdateSparePart;
 import uo.ri.cws.application.business.util.command.CommandExecutor;
 
 public class SparePartCrudServiceImpl implements SparePartCrudService {

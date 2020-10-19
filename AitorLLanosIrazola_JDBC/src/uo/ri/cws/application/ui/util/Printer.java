@@ -9,8 +9,8 @@ import uo.ri.cws.application.business.mechanic.MechanicDto;
 import uo.ri.cws.application.business.order.OrderDto;
 import uo.ri.cws.application.business.order.OrderDto.OrderLineDto;
 import uo.ri.cws.application.business.provider.ProviderDto;
-import uo.ri.cws.application.business.sparePart.SparePartDto;
-import uo.ri.cws.application.business.sparePart.SparePartReportDto;
+import uo.ri.cws.application.business.sparepart.SparePartDto;
+import uo.ri.cws.application.business.sparepart.SparePartReportDto;
 import uo.ri.cws.application.business.supply.SupplyDto;
 
 public class Printer {

@@ -8,8 +8,8 @@ import java.util.Optional;
 
 import uo.ri.cws.application.business.invoice.InvoiceDto;
 import uo.ri.cws.application.business.mechanic.MechanicDto;
-import uo.ri.cws.application.business.sparePart.SparePartDto;
-import uo.ri.cws.application.business.sparePart.SparePartReportDto;
+import uo.ri.cws.application.business.sparepart.SparePartDto;
+import uo.ri.cws.application.business.sparepart.SparePartReportDto;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
 import uo.ri.cws.application.persistence.sparepart.SparePartRecord;

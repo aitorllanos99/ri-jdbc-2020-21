@@ -3,8 +3,8 @@ package uo.ri.cws.application.ui.manager.spares.sparepart.action;
 import alb.util.console.Console;
 import alb.util.menu.Action;
 import uo.ri.cws.application.business.BusinessFactory;
-import uo.ri.cws.application.business.sparePart.SparePartCrudService;
-import uo.ri.cws.application.business.sparePart.SparePartDto;
+import uo.ri.cws.application.business.sparepart.SparePartCrudService;
+import uo.ri.cws.application.business.sparepart.SparePartDto;
 
 public class AddAction implements Action {
 
