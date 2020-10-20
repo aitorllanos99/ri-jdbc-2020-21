@@ -96,7 +96,7 @@ public class RecordAssembler {
 		result.description = rs.getString( "description");
 		result.maxStock = rs.getInt( "maxStock");
 		result.minStock = rs.getInt("minStock");
-		result.price = rs.getInt( "price");
+		result.price = rs.getDouble( "price");
 		result.stock = rs.getInt("stock");
 		return result;
 	}
