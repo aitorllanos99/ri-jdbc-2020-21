@@ -8,6 +8,7 @@ import java.util.List;
 import uo.ri.cws.application.persistence.intervention.InterventionRecord;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
+import uo.ri.cws.application.persistence.orderline.OrderLineRecord;
 import uo.ri.cws.application.persistence.sparepart.SparePartRecord;
 import uo.ri.cws.application.persistence.workorder.WorkOrderRecord;
 
@@ -107,5 +108,15 @@ public class RecordAssembler {
 		}
 		return res;
 	}
+	
+	public static OrderLineRecord toOrderLineRecord( ResultSet rs ) throws SQLException {
+		OrderLineRecord result = new OrderLineRecord();
+		result.order_id  = rs.getString("ORDER_ID");
+		result.sparePart_id = rs.getString("SPAREPART_ID");
+		result.price = rs.getLong("price");
+		result.quantity = rs.getInt("quantity");
+		return result;
+	}
+
 
 }
