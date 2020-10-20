@@ -92,11 +92,36 @@ public class DtoMapper {
 		result.price = price;
 		return result;
 	}
+	
+	public static SparePartDto toDtoSparePart(String id, String code, String description, int stock, int maxStock, int minStock, double price) {
+		SparePartDto result = new SparePartDto();
+		result.id = id;
+		result.code = code;
+		result.description = description;
+		result.stock = stock;
+		result.minStock = minStock;
+		result.maxStock = maxStock;
+		result.price = price;
+		return result;
+	}
 	public static List<SparePartReportDto> toDtoListSparePart(List<SparePartRecord> arg) {
 		List<SparePartReportDto> result = new ArrayList<SparePartReportDto>();
 		for (SparePartRecord mr : arg)
 			result.add(toDto(mr.id, mr.code, mr.description, mr.stock, mr.maxStock, mr.minStock, mr.price));
 		return result;
 	}
+	
+	public static Optional<SparePartReportDto> toDtoSparePartRecord(Optional<SparePartRecord> arg) {
+		Optional<SparePartReportDto> result = arg.isEmpty() ? Optional.ofNullable(null)
+				: Optional.ofNullable(toDto(arg.get().id, arg.get().code, arg.get().description, arg.get().stock, arg.get().maxStock, arg.get().minStock, arg.get().price));
+		return result;
+	}
+	
+	public static Optional<SparePartDto> toDtoSparePartDto(Optional<SparePartRecord> arg) {
+		Optional<SparePartDto> result = arg.isEmpty() ? Optional.ofNullable(null)
+				: Optional.ofNullable(toDtoSparePart(arg.get().id, arg.get().code, arg.get().description, arg.get().stock, arg.get().maxStock, arg.get().minStock, arg.get().price));
+		return result;
+	}
+
 
 }

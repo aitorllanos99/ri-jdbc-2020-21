@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.sparepart.SparePartDto;
+import uo.ri.cws.application.business.util.DtoMapper;
 import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
@@ -22,7 +23,7 @@ public class FindByCode implements Command<Optional<SparePartDto>> {
 		if (code == null || code.isEmpty())
 			throw new BusinessException("[Find By Code Sparepart] The code must have a value");
 		
-		return null;
+		return DtoMapper.toDtoSparePartDto(spg.findByCode(code));
 	}
 
 }
