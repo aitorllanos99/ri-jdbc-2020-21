@@ -2,6 +2,8 @@ package uo.ri.cws.application.persistence;
 
 import uo.ri.cws.application.persistence.mechanic.MechanicGateway;
 import uo.ri.cws.application.persistence.mechanic.impl.MechanicGatewayImpl;
+import uo.ri.cws.application.persistence.order.OrderGateway;
+import uo.ri.cws.application.persistence.order.impl.OrderGatewayImpl;
 import uo.ri.cws.application.persistence.orderline.OrderLineGateway;
 import uo.ri.cws.application.persistence.orderline.impl.OrderLineGatewayImpl;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
@@ -30,6 +32,10 @@ public class PersistenceFactory {
 	
 	public static OrderLineGateway forOrderLine(){
 		return new OrderLineGatewayImpl();
+	}
+	
+	public static OrderGateway forOrders(){
+		return new OrderGatewayImpl();
 	}
 }
 

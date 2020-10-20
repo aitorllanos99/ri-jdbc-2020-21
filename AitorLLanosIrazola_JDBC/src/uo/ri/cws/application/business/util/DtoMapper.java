@@ -8,10 +8,12 @@ import java.util.Optional;
 
 import uo.ri.cws.application.business.invoice.InvoiceDto;
 import uo.ri.cws.application.business.mechanic.MechanicDto;
+import uo.ri.cws.application.business.order.OrderDto;
 import uo.ri.cws.application.business.sparepart.SparePartDto;
 import uo.ri.cws.application.business.sparepart.SparePartReportDto;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
+import uo.ri.cws.application.persistence.order.OrderRecord;
 import uo.ri.cws.application.persistence.sparepart.SparePartRecord;
 
 public class DtoMapper {
@@ -120,6 +122,24 @@ public class DtoMapper {
 	public static Optional<SparePartDto> toDtoSparePartDto(Optional<SparePartRecord> arg) {
 		Optional<SparePartDto> result = arg.isEmpty() ? Optional.ofNullable(null)
 				: Optional.ofNullable(toDtoSparePart(arg.get().id, arg.get().code, arg.get().description, arg.get().stock, arg.get().maxStock, arg.get().minStock, arg.get().price));
+		return result;
+	}
+	
+	public static OrderDto toDtoOrderDto(String id, String code, double amount, LocalDate orderedDate, LocalDate receptionDate, String status) {
+		OrderDto result = new OrderDto();
+		result.id = id;
+		result.code = code;
+		result.orderedDate = orderedDate;
+		result.receptionDate = receptionDate;
+		result.amount = amount;
+		result.status = status;
+		return result;
+	}
+	
+	public static List<OrderDto> toDtoListOrderDto(List<OrderRecord> arg) {
+		List<OrderDto> result = new ArrayList<OrderDto>();
+		for (OrderRecord mr : arg)
+			result.add(toDtoOrderDto(mr.id, mr.code, mr.amount, mr.orderedDate, mr.receptionDate, mr.status));
 		return result;
 	}
 
