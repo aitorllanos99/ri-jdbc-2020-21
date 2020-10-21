@@ -11,4 +11,12 @@ public class SparePartReportDto {
     public int minStock;
     public int maxStock;
     public int totalUnitsSold;
+	@Override
+	public String toString() {
+		return "SparePartReportDto [id=" + id + ", version=" + version + ", code=" + code + ", description="
+				+ description + ", price=" + price + ", stock=" + stock + ", minStock=" + minStock + ", maxStock="
+				+ maxStock + ", totalUnitsSold=" + totalUnitsSold + "]";
+	}
+    
+    
 }

@@ -7,6 +7,7 @@ import uo.ri.cws.application.business.invoice.crud.InvoicingServiceImpl;
 import uo.ri.cws.application.business.mechanic.MechanicCrudService;
 import uo.ri.cws.application.business.mechanic.crud.MechanicCrudServiceImpl;
 import uo.ri.cws.application.business.order.OrdersService;
+import uo.ri.cws.application.business.order.crud.OrdersServiceImpl;
 import uo.ri.cws.application.business.provider.ProvidersCrudService;
 import uo.ri.cws.application.business.sparepart.SparePartCrudService;
 import uo.ri.cws.application.business.sparepart.SparePartReportService;
@@ -29,8 +30,7 @@ public class BusinessFactory {
 	}
 
 	public static OrdersService forOrdersService() {
-		// TODO Auto-generated method stub
-		return null;
+		return new OrdersServiceImpl();
 	}
 
 	public static ProvidersCrudService forProvidersService() {

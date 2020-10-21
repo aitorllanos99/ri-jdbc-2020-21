@@ -9,12 +9,17 @@ import java.util.Optional;
 import uo.ri.cws.application.business.invoice.InvoiceDto;
 import uo.ri.cws.application.business.mechanic.MechanicDto;
 import uo.ri.cws.application.business.order.OrderDto;
+import uo.ri.cws.application.business.order.OrderDto.OrderedProviderDto;
+import uo.ri.cws.application.business.order.OrderDto.OrderedSpareDto;
 import uo.ri.cws.application.business.sparepart.SparePartDto;
 import uo.ri.cws.application.business.sparepart.SparePartReportDto;
+import uo.ri.cws.application.business.supply.SupplyDto;
+import uo.ri.cws.application.business.supply.SupplyDto.SupplierProviderDto;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
 import uo.ri.cws.application.persistence.order.OrderRecord;
 import uo.ri.cws.application.persistence.sparepart.SparePartRecord;
+import uo.ri.cws.application.persistence.supply.SupplyRecord;
 
 public class DtoMapper {
 
@@ -142,6 +147,62 @@ public class DtoMapper {
 			result.add(toDtoOrderDto(mr.id, mr.code, mr.amount, mr.orderedDate, mr.receptionDate, mr.status));
 		return result;
 	}
-
+	public static OrderDto toDto(OrderRecord arg) {
+		OrderDto result = new OrderDto();
+		result.id = arg.id;
+		result.code = arg.code;
+		result.provider.id = arg.providerId;
+		result.orderedDate = arg.orderedDate;
+		result.receptionDate = arg.receptionDate;
+		result.amount = arg.amount;
+		result.status = arg.status;
+		return result;
+	}
+	
+	public static SupplyDto toDto(SupplyRecord arg) {
+		SupplyDto result = new SupplyDto();
+		result.id = arg.id;
+		result.price  = arg.price;
+		result.deliveryTerm = arg.deliveryTerm;
+		result.provider.id = arg.providerId;
+		result.sparePart.id = arg.sparePartId;
+		return result;
+	}
+	
+	public static List<SupplyDto> toDtoListSupplyDto(List<SupplyRecord> arg) {
+		List<SupplyDto> result = new ArrayList<SupplyDto>();
+		for (SupplyRecord mr : arg)
+			result.add(toDto(mr));
+		return result;
+	}
+	
+	public static OrderedProviderDto toOrderProvider(SupplierProviderDto arg) {
+		OrderedProviderDto result = new OrderedProviderDto();
+		result.id = arg.id;
+		result.name = arg.name;
+		result.nif = arg.nif;
+		return result;
+	}
+	
+	public static OrderedSpareDto toOrderedSpare(SparePartReportDto arg) {
+		OrderedSpareDto result  = new OrderedSpareDto();
+		result.id = arg.id;
+		result.code = arg.code;
+		result.description = arg.description;
+		return result;
+	}
+	
+	public static OrderRecord toRecord(OrderDto arg) {
+		OrderRecord result = new OrderRecord();
+		result.id = arg.id;
+		result.code = arg.code;
+		result.providerId = arg.provider.id;
+		result.orderedDate = arg.orderedDate;
+		result.receptionDate = arg.receptionDate;
+		result.amount = arg.amount;
+		result.status = arg.status;
+		return result;
+	}
+	
 
 }

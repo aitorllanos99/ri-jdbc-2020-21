@@ -10,5 +10,5 @@ public interface OrderGateway extends Gateway<OrderRecord> {
 	 * 
 	 * @return the list of the orders generated
 	*/
-	List<OrderRecord> generateOrders();
+	List<OrderRecord> generateOrders(List<OrderRecord> ordersToGenerate);
 }

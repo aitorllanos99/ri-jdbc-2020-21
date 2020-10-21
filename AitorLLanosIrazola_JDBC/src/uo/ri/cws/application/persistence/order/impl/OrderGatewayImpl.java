@@ -40,7 +40,7 @@ public class OrderGatewayImpl implements OrderGateway {
 	}
 
 	@Override
-	public List<OrderRecord> generateOrders() {
+	public List<OrderRecord> generateOrders(List<OrderRecord> ordersToGenerate) {
 		// TODO Auto-generated method stub
 		return null;
 	}

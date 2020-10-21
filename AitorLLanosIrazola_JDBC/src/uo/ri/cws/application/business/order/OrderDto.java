@@ -27,12 +27,31 @@ public class OrderDto {
 	public String id;
 	public String code;
 	public String description;
+	@Override
+	public String toString() {
+		return "OrderedSpareDto [id=" + id + ", code=" + code + ", description=" + description + "]";
+	}
+	
     }
 
     public static class OrderedProviderDto {
 	public String id;
 	public String nif;
 	public String name;
+	@Override
+	public String toString() {
+		return "OrderedProviderDto [id=" + id + ", nif=" + nif + ", name=" + name + "]";
+	}
+	
     }
+
+	@Override
+	public String toString() {
+		return "OrderDto [id=" + id + ", version=" + version + ", code=" + code + ", orderedDate=" + orderedDate
+				+ ", receptionDate=" + receptionDate + ", amount=" + amount + ", status=" + status + ", provider="
+				+ provider + ", lines=" + lines + "]";
+	}
+    
+    
 
 }

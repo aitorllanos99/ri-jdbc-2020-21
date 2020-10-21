@@ -10,6 +10,7 @@ import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
 import uo.ri.cws.application.persistence.orderline.OrderLineRecord;
 import uo.ri.cws.application.persistence.sparepart.SparePartRecord;
+import uo.ri.cws.application.persistence.supply.SupplyRecord;
 import uo.ri.cws.application.persistence.workorder.WorkOrderRecord;
 
 public class RecordAssembler {
@@ -118,5 +119,25 @@ public class RecordAssembler {
 		return result;
 	}
 
+	
+	public static SupplyRecord toSupplyRecord(ResultSet rs) throws SQLException {
+		SupplyRecord result = new SupplyRecord();
+		result.id = rs.getString("id");
+		result.deliveryTerm  = rs.getInt("deliveryTerm");
+		result.price = rs.getDouble("price");
+		result.providerId = rs.getString("provider_id");
+		result.sparePartId = rs.getString("sparepart_id");
+		return result;
+	}
+	
+
+	public static List<SupplyRecord> toSupplyRecordList(ResultSet rs) throws SQLException {
+		List<SupplyRecord> res = new ArrayList<>();
+		while(rs.next()) {
+			res.add(toSupplyRecord( rs ) );
+		}
+		return res;
+	}
+	
 
 }
