@@ -15,11 +15,6 @@ public class SupplyDto {
 		public String nif;
 		public String name;
 
-		@Override
-		public String toString() {
-			return "SupplierProviderDto [id=" + id + ", nif=" + nif + ", name=" + name + "]";
-		}
-
 	}
 
 	public static class SuppliedSparePartDto {
@@ -27,17 +22,6 @@ public class SupplyDto {
 		public String code;
 		public String description;
 
-		@Override
-		public String toString() {
-			return "SuppliedSparePartDto [id=" + id + ", code=" + code + ", description=" + description + "]";
-		}
-
-	}
-
-	@Override
-	public String toString() {
-		return "SupplyDto [id=" + id + ", version=" + version + ", provider=" + provider + ", sparePart=" + sparePart
-				+ ", price=" + price + ", deliveryTerm=" + deliveryTerm + "]";
 	}
 
 }

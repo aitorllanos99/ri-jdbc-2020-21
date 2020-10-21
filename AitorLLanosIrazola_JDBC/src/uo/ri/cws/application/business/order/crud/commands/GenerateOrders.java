@@ -61,7 +61,6 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 				ordersToGenerate.add(DtoMapper.toRecord(odto));
 			}
 			System.out.println("ORDERS: " + odto.toString());
-
 		}
 
 		// Check there isnt a orderline with this sparepart that is in order 2
@@ -94,6 +93,7 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 		if (lowerSupplyDeliveryTerm.size() == 1)
 			return lowerSupplyDeliveryTerm.get(0).provider;
 
+		//Obtenemos los nifs para compararlos
 		ProviderGateway pg = PersistenceFactory.forProvider();
 
 		List<ProviderDto> providers = new ArrayList<ProviderDto>();
@@ -104,7 +104,7 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 				throw new RuntimeException(e);
 			}
 		});
-
+		//Los asignamos a los supply
 		for (ProviderDto p : providers) {
 			for (SupplyDto s : lowerSupplyDeliveryTerm) {
 				if (s.provider.id == p.id) {
