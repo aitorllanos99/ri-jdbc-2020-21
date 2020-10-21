@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.order.OrderDto;
 import uo.ri.cws.application.business.order.OrderDto.OrderLineDto;
+import uo.ri.cws.application.business.provider.ProviderDto;
 import uo.ri.cws.application.business.sparepart.SparePartReportDto;
 import uo.ri.cws.application.business.supply.SupplyDto;
 import uo.ri.cws.application.business.supply.SupplyDto.SupplierProviderDto;
@@ -19,6 +20,7 @@ import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;
 import uo.ri.cws.application.persistence.order.OrderGateway;
 import uo.ri.cws.application.persistence.order.OrderRecord;
+import uo.ri.cws.application.persistence.provider.ProviderGateway;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
 import uo.ri.cws.application.persistence.supply.SupplyGateway;
 
@@ -66,9 +68,7 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 		return DtoMapper.toDtoListOrderDto(og.generateOrders(ordersToGenerate));
 	}
 
-	private SupplierProviderDto selectProvider(List<SupplyDto> dtos, String idSparePart) {
-		System.out.println("******************* SELECT PROVIDER*********************");
-		System.out.println("ID TO SELECT: " + idSparePart);
+	private SupplierProviderDto selectProvider(List<SupplyDto> dtos, String idSparePart) throws SQLException {
 
 		// Filter for sparepart
 		dtos = dtos.stream().filter(c -> c.sparePart.id.equals(idSparePart)).collect(Collectors.toList());
@@ -80,17 +80,10 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 		// We get the ones with that price
 		List<SupplyDto> lowerSupplyPrice = dtos.stream().filter(d -> d.price == lowerPrice)
 				.collect(Collectors.toList());
-		System.out.println("******************* SELECT PROVIDER - AFTER FILTER PRICE*********************");
-		if (lowerSupplyPrice.size() > 1)
-			lowerSupplyPrice.forEach(c -> System.out.println("SUPPLY FOR THIS ID: " + c.id + " SPAREPAR FROM SUPPLY :"
-					+ c.sparePart.id + " ID : " + idSparePart));
 		// If there is just one we returns it
 		if (lowerSupplyPrice.size() == 1)
 			return lowerSupplyPrice.get(0).provider;
-		
-		
-		
-		System.out.println("******************* SELECT PROVIDER - BEFORE FILTER TERM*********************");
+
 		// Else we will check the lowest deliveryTerm
 		// We get the lower deliveryTerm
 		double lowerDeliveryTerm = lowerSupplyPrice.stream().min(Comparator.comparingDouble(dto -> dto.deliveryTerm))
@@ -100,22 +93,29 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 				.collect(Collectors.toList());
 		if (lowerSupplyDeliveryTerm.size() == 1)
 			return lowerSupplyDeliveryTerm.get(0).provider;
-		
-		lowerSupplyDeliveryTerm.forEach(c -> System.out.println("SUPPLY FOR THIS ID: " + c.id + " SPAREPAR FROM SUPPLY :"
-				+ c.sparePart.id + " ID : " + idSparePart));
-		
-		
-		
-		System.out.println("******************* SELECT PROVIDER - BEFORE FILTER NIF*********************");
-		// Else we get the lower NIF
-		String lastSupplyNif = lowerSupplyDeliveryTerm.stream().map(dto -> dto.provider.nif).min(SupplyDto::provider.nif).get();
-		
-		System.out.println("LOWER NIF: " + lastSupplyNif);
-		System.out.println("******************* SELECT PROVIDER - BEFORE FILTER NIF*********************");
-		// Return the one with that nif
-		return lowerSupplyDeliveryTerm.stream().filter(d -> d.provider.nif.contentEquals(lastSupplyNif))
-				.collect(Collectors.toList()).get(0).provider;
-	}
 
+		ProviderGateway pg = PersistenceFactory.forProvider();
+
+		List<ProviderDto> providers = new ArrayList<ProviderDto>();
+		lowerSupplyDeliveryTerm.forEach(c -> {
+			try {
+				providers.add(DtoMapper.toDto(pg.findById(c.provider.id).get()));
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+		});
+
+		for (ProviderDto p : providers) {
+			for (SupplyDto s : lowerSupplyDeliveryTerm) {
+				if (s.provider.id == p.id) {
+					s.provider.nif = p.nif;
+				}
+			}
+		}
+
+		return lowerSupplyDeliveryTerm.stream().min(Comparator.comparing(dto -> dto.provider.nif))
+				.map(dto -> dto.provider).get();
+
+	}
 
 }

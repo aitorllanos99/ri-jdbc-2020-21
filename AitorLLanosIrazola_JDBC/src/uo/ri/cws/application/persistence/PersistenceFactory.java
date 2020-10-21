@@ -6,6 +6,8 @@ import uo.ri.cws.application.persistence.order.OrderGateway;
 import uo.ri.cws.application.persistence.order.impl.OrderGatewayImpl;
 import uo.ri.cws.application.persistence.orderline.OrderLineGateway;
 import uo.ri.cws.application.persistence.orderline.impl.OrderLineGatewayImpl;
+import uo.ri.cws.application.persistence.provider.ProviderGateway;
+import uo.ri.cws.application.persistence.provider.impl.ProviderGatewayImpl;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
 import uo.ri.cws.application.persistence.sparepart.impl.SparePartGatewayImpl;
 import uo.ri.cws.application.persistence.supply.SupplyGateway;
@@ -42,6 +44,10 @@ public class PersistenceFactory {
 
 	public static SupplyGateway forSupply() {
 		return new SupplyGatewayImpl();
+	}
+	
+	public static ProviderGateway forProvider() {
+		return new ProviderGatewayImpl();
 	}
 }
 

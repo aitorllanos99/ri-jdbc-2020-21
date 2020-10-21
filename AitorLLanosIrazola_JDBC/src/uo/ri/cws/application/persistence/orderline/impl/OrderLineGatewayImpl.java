@@ -52,7 +52,7 @@ public class OrderLineGatewayImpl implements OrderLineGateway {
 		ResultSet rs = null;
 		try {
 			c = Jdbc.getCurrentConnection();
-			pst = c.prepareStatement(Conf.getInstance().getProperty("TORDERLINE_FINDBYSPAREPARTID"));
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TORDERLINES_FINDBYSPAREPARTID"));
 			pst.setString(1, id);
 			
 			rs = pst.executeQuery();
