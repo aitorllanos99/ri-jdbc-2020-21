@@ -9,6 +9,7 @@ import java.util.Optional;
 import uo.ri.cws.application.business.invoice.InvoiceDto;
 import uo.ri.cws.application.business.mechanic.MechanicDto;
 import uo.ri.cws.application.business.order.OrderDto;
+import uo.ri.cws.application.business.order.OrderDto.OrderLineDto;
 import uo.ri.cws.application.business.order.OrderDto.OrderedProviderDto;
 import uo.ri.cws.application.business.order.OrderDto.OrderedSpareDto;
 import uo.ri.cws.application.business.provider.ProviderDto;
@@ -19,6 +20,7 @@ import uo.ri.cws.application.business.supply.SupplyDto.SupplierProviderDto;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
 import uo.ri.cws.application.persistence.order.OrderRecord;
+import uo.ri.cws.application.persistence.orderline.OrderLineRecord;
 import uo.ri.cws.application.persistence.provider.ProviderRecord;
 import uo.ri.cws.application.persistence.sparepart.SparePartRecord;
 import uo.ri.cws.application.persistence.supply.SupplyRecord;
@@ -166,6 +168,14 @@ public class DtoMapper {
 		result.receptionDate = arg.receptionDate;
 		result.amount = arg.amount;
 		result.status = arg.status;
+		return result;
+	}
+	
+	public static OrderLineDto toDto(OrderLineRecord arg) {
+		OrderLineDto result = new OrderLineDto();
+		result.price  =arg.price;
+		result.quantity = arg.quantity;
+		result.sparePart.id = arg.sparePart_id;
 		return result;
 	}
 

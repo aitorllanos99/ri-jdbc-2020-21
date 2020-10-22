@@ -6,6 +6,7 @@ import java.util.Optional;
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.order.OrderDto;
 import uo.ri.cws.application.business.order.OrdersService;
+import uo.ri.cws.application.business.order.crud.commands.FindByCode;
 import uo.ri.cws.application.business.order.crud.commands.GenerateOrders;
 import uo.ri.cws.application.business.util.command.CommandExecutor;
 
@@ -24,7 +25,7 @@ public class OrdersServiceImpl implements OrdersService {
 
 	@Override
 	public Optional<OrderDto> findByCode(String code) throws BusinessException {
-		return null;
+		return executor.execute(new FindByCode(code));
 	}
 
 	@Override

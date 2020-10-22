@@ -49,12 +49,13 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 			odto.id = UUID.randomUUID().toString();
 			odto.code = UUID.randomUUID().toString(); // TODO: ASI DE AUTOGENERADO???
 			odto.orderedDate = LocalDate.now();
-
+			odto.status  = "PENDING";
 			// Asign the sparepart
 			OrderLineDto old = new OrderLineDto();
 			old.sparePart = DtoMapper.toOrderedSpare(sprd);
 			old.price = 0; // TODO: SACAR PRECIO DEL PROVEEDOR
 			old.quantity = sprd.maxStock - sprd.stock; // Las necesarias para llenar el stock
+		
 			odto.lines.add(old);
 			if (selectProvider(sdtos, sprd.id) != null) { // Si tiene proveedor se añade sino no
 				odto.provider = DtoMapper.toOrderProvider(selectProvider(sdtos, sprd.id));
@@ -63,8 +64,13 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 			System.out.println("ORDERS: " + odto.toString());
 		}
 
+		
+		//Generate ordeline and order
 		// Check there isnt a orderline with this sparepart that is in order 2
-		return DtoMapper.toDtoListOrderDto(og.generateOrders(ordersToGenerate));
+		for(OrderRecord d :ordersToGenerate)
+			og.add(d);
+		
+		return null;
 	}
 
 	private SupplierProviderDto selectProvider(List<SupplyDto> dtos, String idSparePart) throws SQLException {

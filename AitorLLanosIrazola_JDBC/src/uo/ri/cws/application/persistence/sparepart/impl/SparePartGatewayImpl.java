@@ -88,8 +88,26 @@ public class SparePartGatewayImpl implements SparePartGateway {
 
 	@Override
 	public Optional<SparePartRecord> findById(String id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		// Process
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+			c = Jdbc.getCurrentConnection();
+
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TSPAREPARTS_FINBYID"));
+			pst.setString(1, id);
+
+			rs = pst.executeQuery();
+			if (rs.next())
+				return Optional.of(RecordAssembler.toSparePartRecord(rs));
+			return Optional.ofNullable(null);
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst);
+		}
 	}
 
 	@Override
@@ -143,7 +161,7 @@ public class SparePartGatewayImpl implements SparePartGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 			description = "%" + description + "%"; // This go here because is part of the SQL Language
-			//To search any partial coincidende
+			// To search any partial coincidende
 			pst = c.prepareStatement(Conf.getInstance().getProperty("TSPAREPARTS_FINDBYDESCRIPTION"));
 			pst.setString(1, description);
 			list = RecordAssembler.toSparePartRecordList(pst.executeQuery());

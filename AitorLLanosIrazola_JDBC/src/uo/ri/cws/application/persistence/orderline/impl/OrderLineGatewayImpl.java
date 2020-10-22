@@ -66,4 +66,25 @@ public class OrderLineGatewayImpl implements OrderLineGateway {
 		}
 	}
 
+	@Override
+	public Optional<OrderLineRecord> findByOrderId(String id) {
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+			c = Jdbc.getCurrentConnection();
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TORDERLINES_FINDBYORDERID"));
+			pst.setString(1, id);
+			
+			rs = pst.executeQuery();
+			if (rs.next())
+				return Optional.of(RecordAssembler.toOrderLineRecord(rs));
+			return Optional.ofNullable(null);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(pst);
+		}
+	}
+
 }

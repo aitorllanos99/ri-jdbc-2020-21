@@ -8,6 +8,7 @@ import java.util.List;
 import uo.ri.cws.application.persistence.intervention.InterventionRecord;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
+import uo.ri.cws.application.persistence.order.OrderRecord;
 import uo.ri.cws.application.persistence.orderline.OrderLineRecord;
 import uo.ri.cws.application.persistence.provider.ProviderRecord;
 import uo.ri.cws.application.persistence.sparepart.SparePartRecord;
@@ -140,6 +141,18 @@ public class RecordAssembler {
 		result.name = rs.getString("name");
 		result.nif = rs.getString("nif");
 		result.phone = rs.getString("phone");
+		return result;
+	}
+
+	public static OrderRecord toOrderRecord(ResultSet rs) throws SQLException {
+		OrderRecord result = new OrderRecord();
+		result.id = rs.getString("id");
+		result.code = rs.getString("code");
+		result.amount = rs.getDouble("amount");
+		result.providerId = rs.getString("provider_id");
+		result.orderedDate = rs.getDate("orderedDate").toLocalDate();
+		result.receptionDate = rs.getDate("receptionDate").toLocalDate();
+		result.status = rs.getString("status");
 		return result;
 	}
 

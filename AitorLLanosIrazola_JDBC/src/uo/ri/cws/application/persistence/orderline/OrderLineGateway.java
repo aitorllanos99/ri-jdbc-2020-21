@@ -12,4 +12,11 @@ public interface OrderLineGateway extends Gateway<OrderLineRecord> {
 	 * @return optional with a orderlinerecord if its found null if not
 	 */
 	Optional<OrderLineRecord> findBySparePartId(String id);
+	
+	/**
+	 * Find a OrderLine from the order id
+	 * @param id the id of the order
+	 * @return optional with a orderlinerecord if its found null if not
+	 */
+	Optional<OrderLineRecord> findByOrderId(String id);
 }
