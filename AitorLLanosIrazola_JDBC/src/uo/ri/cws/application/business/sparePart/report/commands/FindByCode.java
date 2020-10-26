@@ -11,6 +11,11 @@ import uo.ri.cws.application.persistence.PersistenceFactory;
 import uo.ri.cws.application.persistence.orderline.OrderLineGateway;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
 
+/**
+ * Comando de logica de la busqueda por codigo en los reports
+ * @author aitor
+ *
+ */
 public class FindByCode implements Command<Optional<SparePartReportDto>> {
 	private String code;
 

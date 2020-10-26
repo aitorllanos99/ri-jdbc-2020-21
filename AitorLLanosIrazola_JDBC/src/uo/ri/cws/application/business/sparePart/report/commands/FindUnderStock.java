@@ -11,6 +11,12 @@ import uo.ri.cws.application.persistence.PersistenceFactory;
 import uo.ri.cws.application.persistence.orderline.OrderLineGateway;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
 
+/**
+ * Comando de logica de la busqueda por existencias bajas
+ * 
+ * @author aitor
+ *
+ */
 public class FindUnderStock implements Command<List<SparePartReportDto>> {
 
 	@Override
@@ -18,7 +24,9 @@ public class FindUnderStock implements Command<List<SparePartReportDto>> {
 		SparePartGateway spg = PersistenceFactory.forSparePart();
 		OrderLineGateway olg = PersistenceFactory.forOrderLine();
 		List<SparePartReportDto> list = DtoMapper.toDtoListSparePart(spg.findUnderStock());
-		list.forEach(c -> {c.totalUnitsSold =  olg.findBySparePartId(c.id).isPresent() ? olg.findBySparePartId(c.id).get().quantity : 0;});
+		list.forEach(c -> {
+			c.totalUnitsSold = olg.findBySparePartId(c.id).isPresent() ? olg.findBySparePartId(c.id).get().quantity : 0;
+		});
 		return list;
 	}
 

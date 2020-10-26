@@ -13,26 +13,32 @@ import uo.ri.cws.application.persistence.provider.ProviderRecord;
 import uo.ri.cws.application.persistence.util.Conf;
 import uo.ri.cws.application.persistence.util.RecordAssembler;
 
+/**
+ * Coleccion de metodos de interaccion con la base de datos
+ * 
+ * @author aitor
+ *
+ */
 public class ProviderGatewayImpl implements ProviderGateway {
 
 	@Override
 	public void add(ProviderRecord t) throws SQLException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void remove(String id) throws SQLException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void update(ProviderRecord t) throws SQLException {
-		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Comando de persitencia de proveedor por identificador
+	 */
 	@Override
 	public Optional<ProviderRecord> findById(String id) throws SQLException {
 		// Process
@@ -59,7 +65,7 @@ public class ProviderGatewayImpl implements ProviderGateway {
 
 	@Override
 	public List<ProviderRecord> findAll() throws SQLException {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 

@@ -8,7 +8,11 @@ import uo.ri.cws.application.persistence.PersistenceFactory;
 import uo.ri.cws.application.persistence.orderline.OrderLineGateway;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
 import uo.ri.cws.application.persistence.substitution.SubstitutionGateway;
-
+/**
+ * Comando de ejecucion de la logica de borrar repuesto
+ * @author aitor
+ *
+ */
 public class DeleteSparePart implements Command<Void> {
 
 	private String code;

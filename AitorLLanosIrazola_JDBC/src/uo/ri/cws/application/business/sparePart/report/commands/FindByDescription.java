@@ -10,7 +10,11 @@ import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;
 import uo.ri.cws.application.persistence.orderline.OrderLineGateway;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
-
+/**
+ * Comando de logica de la busqueda por descripcion
+ * @author aitor
+ *
+ */
 public class FindByDescription implements Command<List<SparePartReportDto>> {
 	private String description;
 

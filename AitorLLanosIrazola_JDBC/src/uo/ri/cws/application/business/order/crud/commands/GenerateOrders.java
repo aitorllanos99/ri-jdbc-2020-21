@@ -27,6 +27,12 @@ import uo.ri.cws.application.persistence.provider.ProviderGateway;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
 import uo.ri.cws.application.persistence.supply.SupplyGateway;
 
+/**
+ * Comando de ejecucion de logica de la generacion de pedidos
+ * 
+ * @author aitor
+ *
+ */
 public class GenerateOrders implements Command<List<OrderDto>> {
 
 	@Override
@@ -57,7 +63,7 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 				if (og.findById(idToCheck.get().order_id).isEmpty()) {
 					OrderDto odto = new OrderDto();
 					odto.id = UUID.randomUUID().toString();
-					odto.code = UUID.randomUUID().toString(); // TODO: ASI DE AUTOGENERADO???
+					odto.code = UUID.randomUUID().toString();
 					odto.orderedDate = LocalDate.now();
 					odto.receptionDate = LocalDate.MAX;
 					odto.status = "PENDING";
@@ -66,11 +72,12 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 					OrderLineDto old = new OrderLineDto();
 					old.sparePart = DtoMapper.toOrderedSpare(sprd);
 					old.quantity = sprd.maxStock - sprd.stock; // Las necesarias para llenar el stock
-				
+
 					odto.lines.add(old);
 					if (selectProvider(sdtos, sprd.id) != null) { // Si tiene proveedor se añade sino no
 						odto.provider = DtoMapper.toOrderProvider(selectProvider(sdtos, sprd.id));
-						old.price = sdtos.stream().filter(c -> c.provider.id.equals(odto.provider.id)).collect(Collectors.toList()).get(0).price;
+						old.price = sdtos.stream().filter(c -> c.provider.id.equals(odto.provider.id))
+								.collect(Collectors.toList()).get(0).price;
 						odto.amount = old.price * old.quantity;
 						ordersToGenerate.add(DtoMapper.toRecord(odto));
 						ordersToPrint.add(odto);
@@ -83,7 +90,7 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 			} else {
 				OrderDto odto = new OrderDto();
 				odto.id = UUID.randomUUID().toString();
-				odto.code = UUID.randomUUID().toString(); // TODO: ASI DE AUTOGENERADO???
+				odto.code = UUID.randomUUID().toString();
 				odto.orderedDate = LocalDate.now();
 				odto.receptionDate = LocalDate.MAX;
 				odto.status = "PENDING";
@@ -91,14 +98,14 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 				// Asign the sparepart
 				OrderLineDto old = new OrderLineDto();
 				old.sparePart = DtoMapper.toOrderedSpare(sprd);
-				old.price = 0; // TODO: SACAR PRECIO DEL PROVEEDOR
-				
+
 				old.quantity = sprd.maxStock - sprd.stock; // Las necesarias para llenar el stock
 				odto.amount = old.price * old.quantity;
 				odto.lines.add(old);
 				if (selectProvider(sdtos, sprd.id) != null) { // Si tiene proveedor se añade sino no
 					odto.provider = DtoMapper.toOrderProvider(selectProvider(sdtos, sprd.id));
-					old.price = sdtos.stream().filter(c -> c.provider.id.equals(odto.provider.id)).collect(Collectors.toList()).get(0).price;
+					old.price = sdtos.stream().filter(c -> c.provider.id.equals(odto.provider.id))
+							.collect(Collectors.toList()).get(0).price;
 					odto.amount = old.price * old.quantity;
 					ordersToPrint.add(odto);
 					ordersToGenerate.add(DtoMapper.toRecord(odto));
@@ -126,6 +133,16 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 		return ordersToPrint;
 	}
 
+	/**
+	 * Metodo auxiliar para buscar el mejor proveedor dado el enunciado de la
+	 * ampliacion
+	 * 
+	 * @param dtos,        la lista con los proveedores
+	 * @param idSparePart, el identificador de la pieza a buscar proveedor
+	 * @return el mejor proveedor por los criterios de la ampliacion
+	 * @throws SQLException si ocurre algun problema en la persistencia lo
+	 *                      propagamos
+	 */
 	private SupplierProviderDto selectProvider(List<SupplyDto> dtos, String idSparePart) throws SQLException {
 
 		// Filter for sparepart

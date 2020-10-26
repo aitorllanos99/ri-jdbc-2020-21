@@ -13,56 +13,66 @@ import uo.ri.cws.application.persistence.supply.SupplyRecord;
 import uo.ri.cws.application.persistence.util.Conf;
 import uo.ri.cws.application.persistence.util.RecordAssembler;
 
+/**
+ * Coleccion de metodos de interaccion con la base de datos
+ * 
+ * @author aitor
+ *
+ */
 public class SupplyGatewayImpl implements SupplyGateway {
 
 	@Override
 	public void add(SupplyRecord t) throws SQLException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void remove(String id) throws SQLException {
-		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Comando de persistencia de actualizar supply
+	 */
 	@Override
 	public void update(SupplyRecord supply) throws SQLException {
 		// Process
-				Connection c = null;
-				PreparedStatement pst = null;
-				try {
-					c = Jdbc.getCurrentConnection();
+		Connection c = null;
+		PreparedStatement pst = null;
+		try {
+			c = Jdbc.getCurrentConnection();
 
-					pst = c.prepareStatement(Conf.getInstance().getProperty("TSPUPPLIES_UPDATE"));
-					pst.setInt(1, supply.deliveryTerm);
-					pst.setDouble(2, supply.price);
-					pst.setString(3, supply.providerId);
-					pst.setString(4, supply.sparePartId);
-				
-					pst.executeUpdate();
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TSPUPPLIES_UPDATE"));
+			pst.setInt(1, supply.deliveryTerm);
+			pst.setDouble(2, supply.price);
+			pst.setString(3, supply.providerId);
+			pst.setString(4, supply.sparePartId);
 
-				} catch (SQLException e) {
-					throw new RuntimeException(e);
-				} finally {
-					Jdbc.close(pst);
-				}
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(pst);
+		}
 
 	}
 
 	@Override
 	public Optional<SupplyRecord> findById(String id) throws SQLException {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public List<SupplyRecord> findAll() throws SQLException {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
+	/**
+	 * Comando de persistencia de buscar supply por identificador de repuesto
+	 */
 	@Override
 	public List<SupplyRecord> findBySparePartId(String id) {
 		// Process

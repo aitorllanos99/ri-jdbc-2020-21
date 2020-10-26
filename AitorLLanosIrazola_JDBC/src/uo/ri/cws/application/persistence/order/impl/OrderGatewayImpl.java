@@ -14,8 +14,16 @@ import uo.ri.cws.application.persistence.order.OrderRecord;
 import uo.ri.cws.application.persistence.util.Conf;
 import uo.ri.cws.application.persistence.util.RecordAssembler;
 
+/**
+ * Coleccion de metodos de interaccion con la base de datos de pedidos
+ * 
+ * @author aitor
+ *
+ */
 public class OrderGatewayImpl implements OrderGateway {
-
+	/**
+	 * Comando de persistencia de añadir pedido
+	 */
 	@Override
 	public void add(OrderRecord order) throws SQLException {
 		// Process
@@ -44,16 +52,17 @@ public class OrderGatewayImpl implements OrderGateway {
 
 	@Override
 	public void remove(String id) throws SQLException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void update(OrderRecord t) throws SQLException {
-		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Comando de persistencia de buscar pedido por identificador
+	 */
 	@Override
 	public Optional<OrderRecord> findById(String id) throws SQLException {
 		// Process
@@ -80,10 +89,12 @@ public class OrderGatewayImpl implements OrderGateway {
 
 	@Override
 	public List<OrderRecord> findAll() throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Comando de persistencia de buscar pedido por codigo
+	 */
 	@Override
 	public Optional<OrderRecord> findByCode(String code) {
 		// Process
@@ -108,6 +119,9 @@ public class OrderGatewayImpl implements OrderGateway {
 		}
 	}
 
+	/**
+	 * Comando de peristencia de buscar pedido por nif del proveedor
+	 */
 	@Override
 	public List<OrderRecord> findByProviderNif(String nif) {
 		Connection c = null;

@@ -11,37 +11,28 @@ public class InterventionGatewayImpl implements InterventionGateway {
 
 	@Override
 	public void add(InterventionRecord t) throws SQLException {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void remove(String id) throws SQLException {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void update(InterventionRecord t) throws SQLException {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public Optional<InterventionRecord> findById(String id) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<InterventionRecord> findAll() throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<InterventionRecord> findByMechanicId(String id) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

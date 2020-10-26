@@ -8,7 +8,11 @@ import uo.ri.cws.application.business.util.DtoMapper;
 import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;
 import uo.ri.cws.application.persistence.mechanic.MechanicGateway;
-
+/**
+ * Comando de logica de añadir mecanico
+ * @author aitor
+ *
+ */
 public class AddMechanic implements Command<MechanicDto> {
 
 	private MechanicDto dto;

@@ -10,8 +10,14 @@ import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;
 import uo.ri.cws.application.persistence.order.OrderGateway;
 
+/**
+ * Comando de logica de la busqueda de proveedor por el nif del proveedor
+ * 
+ * @author aitor
+ *
+ */
 public class FindByProviderNif implements Command<List<OrderDto>> {
-	
+
 	private String nif;
 
 	public FindByProviderNif(String nif) {
@@ -20,13 +26,11 @@ public class FindByProviderNif implements Command<List<OrderDto>> {
 
 	@Override
 	public List<OrderDto> execute() throws BusinessException, SQLException {
-		
 		OrderGateway og = PersistenceFactory.forOrders();
-		//En una consultA??
 		List<OrderDto> list = DtoMapper.toDtoListOrderDto(og.findByProviderNif(nif));
-		if(list == null || list.isEmpty())
+		if (list == null || list.isEmpty())
 			throw new BusinessException("[Order - Find By Provider Nif] There is no orders with that nif");
-		list.forEach(c -> c.provider.nif  = nif);
+		list.forEach(c -> c.provider.nif = nif);
 		return list;
 	}
 

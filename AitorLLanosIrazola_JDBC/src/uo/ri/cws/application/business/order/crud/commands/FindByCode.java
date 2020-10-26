@@ -15,7 +15,11 @@ import uo.ri.cws.application.persistence.order.OrderGateway;
 import uo.ri.cws.application.persistence.orderline.OrderLineGateway;
 import uo.ri.cws.application.persistence.provider.ProviderGateway;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
-
+/**
+ * Comando de logica de la busqueda de pedidos por el codigo
+ * @author aitor
+ *
+ */
 public class FindByCode implements Command<Optional<OrderDto>> {
 
 	private String code;
@@ -35,7 +39,7 @@ public class FindByCode implements Command<Optional<OrderDto>> {
 		OrderDto dto = DtoMapper.toDto(og.findByCode(code).get());
 		ProviderDto pdto = DtoMapper.toDto(pg.findById(dto.provider.id).get());
 		OrderLineDto old = DtoMapper.toDto(olg.findByOrderId(dto.id).get());
-		System.out.println(old.sparePart.id);
+		
 		SparePartReportDto spd = DtoMapper.toDto(spg.findById(old.sparePart.id).get());
 		
 		dto.provider.name = pdto.name;

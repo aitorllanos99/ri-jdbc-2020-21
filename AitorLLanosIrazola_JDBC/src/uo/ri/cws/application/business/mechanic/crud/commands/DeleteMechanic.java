@@ -5,7 +5,11 @@ import java.sql.SQLException;
 import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;
 import uo.ri.cws.application.persistence.mechanic.MechanicGateway;
-
+/**
+ * Comando de logica de borrar mecanico
+ * @author aitor
+ *
+ */
 public class DeleteMechanic implements Command<Void> {
 
 	private String id;

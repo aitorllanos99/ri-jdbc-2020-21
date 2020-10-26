@@ -15,41 +15,54 @@ import uo.ri.cws.application.business.sparepart.crud.SparePartCrudServiceImpl;
 import uo.ri.cws.application.business.sparepart.report.SparePartReportServiceImpl;
 import uo.ri.cws.application.business.supply.SuppliesCrudService;
 
+/**
+ * Factoria de creacion de las capas de servicio
+ * 
+ * @author aitor
+ *
+ */
 public class BusinessFactory {
 
-
+	/**
+	 * Creacion de la capa de servicio de la capa de servicio de los mecanicos
+	 * 
+	 * @return la capa de servicio implementada de los mecanicos
+	 */
 	public static MechanicCrudService forMechanicCrudService() {
 		return new MechanicCrudServiceImpl();
 	}
 
 	public static InvoicingService forCreateInvoiceService() {
-	return new InvoicingServiceImpl();
+		return new InvoicingServiceImpl();
 	}
+	/**
+	 * Creacion de la capa de servicio de la capa de servicio de los repuestos
+	 * @return la capa de servicio implementada de los repuestos
+	 */
 	public static SparePartCrudService forSparePartCrudService() {
 		return new SparePartCrudServiceImpl();
 	}
-
+	/**
+	 * Creacion de la capa de servicio de la capa de servicio de los pedidos
+	 * @return la capa de servicio implementada de los pedidos
+	 */
 	public static OrdersService forOrdersService() {
 		return new OrdersServiceImpl();
 	}
 
 	public static ProvidersCrudService forProvidersService() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public static SuppliesCrudService forSuppliesCrudService() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
+	/**
+	 * Creacion de la capa de servicio de la capa de servicio de los report de repuestos
+	 * @return la capa de servicio implementada de los reports de repuestos
+	 */
 	public static SparePartReportService forSparePartReportService() {
 		return new SparePartReportServiceImpl();
 	}
 
-
-
-
-
 }
-

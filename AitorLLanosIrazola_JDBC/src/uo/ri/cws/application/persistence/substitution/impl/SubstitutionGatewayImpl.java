@@ -12,39 +12,46 @@ import uo.ri.cws.application.persistence.substitution.SubstitutionGateway;
 import uo.ri.cws.application.persistence.substitution.SubstitutionRecord;
 import uo.ri.cws.application.persistence.util.Conf;
 import uo.ri.cws.application.persistence.util.RecordAssembler;
-
+/**
+ * Coleccion de metodos de interaccion con la base de datos
+ * @author aitor
+ *
+ */
 public class SubstitutionGatewayImpl implements SubstitutionGateway {
 
 	@Override
 	public void add(SubstitutionRecord t) throws SQLException {
-		// TODO Auto-generated method stub
+	
 
 	}
 
 	@Override
 	public void remove(String id) throws SQLException {
-		// TODO Auto-generated method stub
+		
 
 	}
 
 	@Override
 	public void update(SubstitutionRecord t) throws SQLException {
-		// TODO Auto-generated method stub
+	
 
 	}
 
 	@Override
 	public Optional<SubstitutionRecord> findById(String id) throws SQLException {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public List<SubstitutionRecord> findAll() throws SQLException {
-		// TODO Auto-generated method stub
+	
 		return null;
 	}
 
+	/**
+	 * Metodo de persistencia que busca por identificador de un repuesto en la tabla substituciones
+	 */
 	@Override
 	public List<SubstitutionRecord> findBySparePart(String id) {
 		// Process

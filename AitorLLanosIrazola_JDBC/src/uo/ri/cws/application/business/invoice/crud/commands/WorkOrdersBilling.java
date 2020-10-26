@@ -12,7 +12,11 @@ import alb.util.jdbc.Jdbc;
 import alb.util.math.Round;
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.invoice.InvoiceDto;
-
+/**
+ * Comando de logica del crear invoice para ordenes de trabajo
+ * @author aitor
+ *
+ */
 public class WorkOrdersBilling {
 	private static final String SQL_FIND_WORKORDERS = "select * from TWorkOrders where id = ?";
 	private static final String SQL_CHECK_WORKORDER_STATUS = "select status from TWorkOrders where id = ?";
@@ -31,7 +35,7 @@ public class WorkOrdersBilling {
 	}
 
 	public InvoiceDto execute() throws BusinessException {
-		
+		InvoiceGateway ig = PersistenceFactory.forInvoice();
 		if(!checkWorkOrdersExist(workOrdersIds))
 			throw new BusinessException("Workorder does not exist");
 		if(!checkWorkOrdersFinished(workOrdersIds))
@@ -50,6 +54,7 @@ public class WorkOrdersBilling {
 		idto.vat = vat;
 		idto.total = total;
 		String idInvoice = createInvoice(idto);
+		
 		linkWorkordersToInvoice(idInvoice, workOrdersIds);
 		markWorkOrderAsInvoiced(workOrdersIds);
 		return idto;

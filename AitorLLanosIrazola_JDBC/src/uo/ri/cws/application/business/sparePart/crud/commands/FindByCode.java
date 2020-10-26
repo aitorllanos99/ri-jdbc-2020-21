@@ -10,6 +10,11 @@ import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
 
+/**
+ * Logica del comando Buscar por codigo repuesto
+ * @author aitor
+ *
+ */
 public class FindByCode implements Command<Optional<SparePartDto>> {
 	private String code;
 

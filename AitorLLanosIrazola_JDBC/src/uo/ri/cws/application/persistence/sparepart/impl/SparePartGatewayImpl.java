@@ -13,8 +13,16 @@ import uo.ri.cws.application.persistence.sparepart.SparePartRecord;
 import uo.ri.cws.application.persistence.util.Conf;
 import uo.ri.cws.application.persistence.util.RecordAssembler;
 
+/**
+ * Coleccion de metodos de interaccion con la base de datos
+ * 
+ * @author aitor
+ *
+ */
 public class SparePartGatewayImpl implements SparePartGateway {
-
+	/**
+	 * Comando de peristencia de añadir repuesto
+	 */
 	@Override
 	public void add(SparePartRecord sparePart) throws SQLException {
 		// Process
@@ -42,6 +50,9 @@ public class SparePartGatewayImpl implements SparePartGateway {
 
 	}
 
+	/**
+	 * Comando de persistencia de eliminar repuesto
+	 */
 	@Override
 	public void remove(String id) throws SQLException {
 		Connection c = null;
@@ -61,6 +72,9 @@ public class SparePartGatewayImpl implements SparePartGateway {
 
 	}
 
+	/**
+	 * Comando de persistencia de actualizar repuesto
+	 */
 	@Override
 	public void update(SparePartRecord sparePart) throws SQLException {
 		// Process
@@ -86,6 +100,9 @@ public class SparePartGatewayImpl implements SparePartGateway {
 
 	}
 
+	/**
+	 * Comando de persistencia de buscar repuesto por identificador
+	 */
 	@Override
 	public Optional<SparePartRecord> findById(String id) throws SQLException {
 		// Process
@@ -110,6 +127,9 @@ public class SparePartGatewayImpl implements SparePartGateway {
 		}
 	}
 
+	/**
+	 * Comando de persistencia de buscar todos los repuestos
+	 */
 	@Override
 	public List<SparePartRecord> findAll() throws SQLException {
 		Connection c = null;
@@ -129,6 +149,9 @@ public class SparePartGatewayImpl implements SparePartGateway {
 		}
 	}
 
+	/**
+	 * Comando de persistencia de buscar repuesto por codigo
+	 */
 	@Override
 	public Optional<SparePartRecord> findByCode(String code) throws SQLException {
 		// Process
@@ -153,6 +176,9 @@ public class SparePartGatewayImpl implements SparePartGateway {
 		}
 	}
 
+	/**
+	 * Comando de persistencia por descripcion parcial
+	 */
 	@Override
 	public List<SparePartRecord> findByDescritpion(String description) throws SQLException {
 		Connection c = null;
@@ -173,6 +199,9 @@ public class SparePartGatewayImpl implements SparePartGateway {
 		}
 	}
 
+	/**
+	 * Comando de persistencia de buscar por existencias bajas
+	 */
 	@Override
 	public List<SparePartRecord> findUnderStock() throws SQLException {
 		Connection c = null;
