@@ -171,6 +171,7 @@ public class DtoMapper {
 		return result;
 	}
 	
+	
 	public static OrderLineDto toDto(OrderLineRecord arg) {
 		OrderLineDto result = new OrderLineDto();
 		result.price  =arg.price;
@@ -231,6 +232,14 @@ public class DtoMapper {
 		result.name = arg.name;
 		result.nif = arg.nif;
 		result.phone = arg.phone;
+		return result;
+	}
+	
+	public static OrderLineRecord toRecord(OrderLineDto arg) {
+		OrderLineRecord result = new OrderLineRecord();
+		result.price  =arg.price;
+		result.quantity = arg.quantity;
+		result.sparePart_id = arg.sparePart.id;
 		return result;
 	}
 

@@ -7,6 +7,7 @@ import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.order.OrderDto;
 import uo.ri.cws.application.business.order.OrdersService;
 import uo.ri.cws.application.business.order.crud.commands.FindByCode;
+import uo.ri.cws.application.business.order.crud.commands.FindByProviderNif;
 import uo.ri.cws.application.business.order.crud.commands.GenerateOrders;
 import uo.ri.cws.application.business.util.command.CommandExecutor;
 
@@ -20,7 +21,7 @@ public class OrdersServiceImpl implements OrdersService {
 
 	@Override
 	public List<OrderDto> findByProviderNif(String nif) throws BusinessException {
-		return null;
+		return executor.execute(new FindByProviderNif(nif));
 	}
 
 	@Override

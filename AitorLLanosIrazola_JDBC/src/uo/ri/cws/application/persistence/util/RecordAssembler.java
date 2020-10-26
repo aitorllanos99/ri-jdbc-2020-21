@@ -155,5 +155,14 @@ public class RecordAssembler {
 		result.status = rs.getString("status");
 		return result;
 	}
+	
+
+	public static List<OrderRecord> toOrderRecordList(ResultSet rs) throws SQLException {
+		List<OrderRecord> res = new ArrayList<>();
+		while (rs.next()) {
+			res.add(toOrderRecord(rs));
+		}
+		return res;
+	}
 
 }

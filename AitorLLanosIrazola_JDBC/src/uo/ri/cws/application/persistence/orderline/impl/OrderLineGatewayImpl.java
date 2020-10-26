@@ -16,8 +16,26 @@ import uo.ri.cws.application.persistence.util.RecordAssembler;
 public class OrderLineGatewayImpl implements OrderLineGateway {
 
 	@Override
-	public void add(OrderLineRecord t) throws SQLException {
-		// TODO Auto-generated method stub
+	public void add(OrderLineRecord orderline) throws SQLException {
+		// Process
+				Connection c = null;
+				PreparedStatement pst = null;
+
+				try {
+					c = Jdbc.getCurrentConnection();
+					pst = c.prepareStatement(Conf.getInstance().getProperty("TORDERLINES_ADD"));
+					pst.setDouble(1, orderline.price);
+					pst.setInt(2, orderline.quantity);
+					pst.setString(3, orderline.order_id);
+					pst.setString(4, orderline.sparePart_id);
+					pst.executeUpdate();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				} finally {
+					Jdbc.close(pst);
+				}
+
 
 	}
 

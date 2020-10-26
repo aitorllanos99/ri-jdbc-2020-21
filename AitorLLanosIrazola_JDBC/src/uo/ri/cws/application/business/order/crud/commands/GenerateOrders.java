@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -20,6 +21,8 @@ import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;
 import uo.ri.cws.application.persistence.order.OrderGateway;
 import uo.ri.cws.application.persistence.order.OrderRecord;
+import uo.ri.cws.application.persistence.orderline.OrderLineGateway;
+import uo.ri.cws.application.persistence.orderline.OrderLineRecord;
 import uo.ri.cws.application.persistence.provider.ProviderGateway;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
 import uo.ri.cws.application.persistence.supply.SupplyGateway;
@@ -29,8 +32,10 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 	@Override
 	public List<OrderDto> execute() throws BusinessException, SQLException {
 		OrderGateway og = PersistenceFactory.forOrders();
+		OrderLineGateway olg = PersistenceFactory.forOrderLine();
 		SparePartGateway spg = PersistenceFactory.forSparePart();
 		SupplyGateway sg = PersistenceFactory.forSupply();
+		ProviderGateway pg = PersistenceFactory.forProvider();
 
 		List<SparePartReportDto> listUnderStock = DtoMapper.toDtoListSparePart(spg.findUnderStock());
 		List<SupplyDto> sdtos = new ArrayList<SupplyDto>();
@@ -43,42 +48,92 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 
 		// Assign to the provider
 		List<OrderRecord> ordersToGenerate = new ArrayList<OrderRecord>();
-
+		List<OrderLineRecord> ordersLinesToGenerate = new ArrayList<OrderLineRecord>();
+		List<OrderDto> ordersToPrint = new ArrayList<OrderDto>();
 		for (SparePartReportDto sprd : listUnderStock) {
-			OrderDto odto = new OrderDto();
-			odto.id = UUID.randomUUID().toString();
-			odto.code = UUID.randomUUID().toString(); // TODO: ASI DE AUTOGENERADO???
-			odto.orderedDate = LocalDate.now();
-			odto.status  = "PENDING";
-			// Asign the sparepart
-			OrderLineDto old = new OrderLineDto();
-			old.sparePart = DtoMapper.toOrderedSpare(sprd);
-			old.price = 0; // TODO: SACAR PRECIO DEL PROVEEDOR
-			old.quantity = sprd.maxStock - sprd.stock; // Las necesarias para llenar el stock
-		
-			odto.lines.add(old);
-			if (selectProvider(sdtos, sprd.id) != null) { // Si tiene proveedor se añade sino no
-				odto.provider = DtoMapper.toOrderProvider(selectProvider(sdtos, sprd.id));
-				ordersToGenerate.add(DtoMapper.toRecord(odto));
+			// Check there isnt a orderline with this sparepart that is in order 2
+			Optional<OrderLineRecord> idToCheck = olg.findBySparePartId(sprd.id);
+			if (idToCheck.isPresent()) {
+				if (og.findById(idToCheck.get().order_id).isEmpty()) {
+					OrderDto odto = new OrderDto();
+					odto.id = UUID.randomUUID().toString();
+					odto.code = UUID.randomUUID().toString(); // TODO: ASI DE AUTOGENERADO???
+					odto.orderedDate = LocalDate.now();
+					odto.receptionDate = LocalDate.MAX;
+					odto.status = "PENDING";
+
+					// Asign the sparepart
+					OrderLineDto old = new OrderLineDto();
+					old.sparePart = DtoMapper.toOrderedSpare(sprd);
+					old.quantity = sprd.maxStock - sprd.stock; // Las necesarias para llenar el stock
+				
+					odto.lines.add(old);
+					if (selectProvider(sdtos, sprd.id) != null) { // Si tiene proveedor se añade sino no
+						odto.provider = DtoMapper.toOrderProvider(selectProvider(sdtos, sprd.id));
+						old.price = sdtos.stream().filter(c -> c.provider.id.equals(odto.provider.id)).collect(Collectors.toList()).get(0).price;
+						odto.amount = old.price * old.quantity;
+						ordersToGenerate.add(DtoMapper.toRecord(odto));
+						ordersToPrint.add(odto);
+						// Para las orderlines que tambien hay que generar
+						OrderLineRecord or = DtoMapper.toRecord(old);
+						or.order_id = odto.id;
+						ordersLinesToGenerate.add(or);
+					}
+				}
+			} else {
+				OrderDto odto = new OrderDto();
+				odto.id = UUID.randomUUID().toString();
+				odto.code = UUID.randomUUID().toString(); // TODO: ASI DE AUTOGENERADO???
+				odto.orderedDate = LocalDate.now();
+				odto.receptionDate = LocalDate.MAX;
+				odto.status = "PENDING";
+
+				// Asign the sparepart
+				OrderLineDto old = new OrderLineDto();
+				old.sparePart = DtoMapper.toOrderedSpare(sprd);
+				old.price = 0; // TODO: SACAR PRECIO DEL PROVEEDOR
+				
+				old.quantity = sprd.maxStock - sprd.stock; // Las necesarias para llenar el stock
+				odto.amount = old.price * old.quantity;
+				odto.lines.add(old);
+				if (selectProvider(sdtos, sprd.id) != null) { // Si tiene proveedor se añade sino no
+					odto.provider = DtoMapper.toOrderProvider(selectProvider(sdtos, sprd.id));
+					old.price = sdtos.stream().filter(c -> c.provider.id.equals(odto.provider.id)).collect(Collectors.toList()).get(0).price;
+					odto.amount = old.price * old.quantity;
+					ordersToPrint.add(odto);
+					ordersToGenerate.add(DtoMapper.toRecord(odto));
+					// Para las orderlines que tambien hay que generar
+					OrderLineRecord or = DtoMapper.toRecord(old);
+					or.order_id = odto.id;
+					ordersLinesToGenerate.add(or);
+				}
 			}
-			System.out.println("ORDERS: " + odto.toString());
 		}
 
-		
-		//Generate ordeline and order
-		// Check there isnt a orderline with this sparepart that is in order 2
-		for(OrderRecord d :ordersToGenerate)
+		// Generate ordeline and order
+		for (OrderRecord d : ordersToGenerate)
 			og.add(d);
-		
-		return null;
+		for (OrderLineRecord o : ordersLinesToGenerate)
+			olg.add(o);
+
+		ordersToPrint.forEach(o -> {
+			try {
+				o.provider.nif = pg.findById(o.provider.id).get().nif;
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+		});
+		return ordersToPrint;
 	}
 
 	private SupplierProviderDto selectProvider(List<SupplyDto> dtos, String idSparePart) throws SQLException {
 
 		// Filter for sparepart
 		dtos = dtos.stream().filter(c -> c.sparePart.id.equals(idSparePart)).collect(Collectors.toList());
+
 		if (dtos.isEmpty()) // No hay proveedor para este repuesto
 			return null;
+
 		// First select from prices
 		// we get the lowest price
 		double lowerPrice = dtos.stream().min(Comparator.comparingDouble(dto -> dto.price)).get().price;
@@ -99,20 +154,20 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 		if (lowerSupplyDeliveryTerm.size() == 1)
 			return lowerSupplyDeliveryTerm.get(0).provider;
 
-		//Obtenemos los nifs para compararlos
+		// Comparacion por nifs
 		ProviderGateway pg = PersistenceFactory.forProvider();
-
+		// Sacamos los nifs por si hay que compararlos y para mostrarlos posteriormente
 		List<ProviderDto> providers = new ArrayList<ProviderDto>();
-		lowerSupplyDeliveryTerm.forEach(c -> {
+		dtos.forEach(c -> {
 			try {
 				providers.add(DtoMapper.toDto(pg.findById(c.provider.id).get()));
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			}
 		});
-		//Los asignamos a los supply
+		// Los asignamos a los supply
 		for (ProviderDto p : providers) {
-			for (SupplyDto s : lowerSupplyDeliveryTerm) {
+			for (SupplyDto s : dtos) {
 				if (s.provider.id == p.id) {
 					s.provider.nif = p.nif;
 				}
