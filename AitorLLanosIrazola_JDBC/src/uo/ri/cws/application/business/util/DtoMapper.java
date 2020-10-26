@@ -3,6 +3,7 @@ package uo.ri.cws.application.business.util;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,6 +65,17 @@ public class DtoMapper {
 		result.number = arg.number;
 		result.status = arg.status;
 		result.date = LocalDate.ofInstant(arg.date.toInstant(), ZoneId.systemDefault());
+		result.total = arg.total;
+		result.vat = arg.vat;
+		return result;
+	}
+
+	public static InvoiceRecord toRecord(InvoiceDto arg) {
+		InvoiceRecord result = new InvoiceRecord();
+		result.id = arg.id;
+		result.number = arg.number;
+		result.status = arg.status;
+		result.date = Date.from(arg.date.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		result.total = arg.total;
 		result.vat = arg.vat;
 		return result;
@@ -170,11 +182,10 @@ public class DtoMapper {
 		result.status = arg.status;
 		return result;
 	}
-	
-	
+
 	public static OrderLineDto toDto(OrderLineRecord arg) {
 		OrderLineDto result = new OrderLineDto();
-		result.price  =arg.price;
+		result.price = arg.price;
 		result.quantity = arg.quantity;
 		result.sparePart.id = arg.sparePart_id;
 		return result;
@@ -196,7 +207,6 @@ public class DtoMapper {
 			result.add(toDto(mr));
 		return result;
 	}
-	
 
 	public static SupplyRecord toRecord(SupplyDto arg) {
 		SupplyRecord result = new SupplyRecord();
@@ -207,7 +217,6 @@ public class DtoMapper {
 		result.sparePartId = arg.sparePart.id;
 		return result;
 	}
-
 
 	public static OrderedProviderDto toOrderProvider(SupplierProviderDto arg) {
 		OrderedProviderDto result = new OrderedProviderDto();
@@ -246,10 +255,10 @@ public class DtoMapper {
 		result.phone = arg.phone;
 		return result;
 	}
-	
+
 	public static OrderLineRecord toRecord(OrderLineDto arg) {
 		OrderLineRecord result = new OrderLineRecord();
-		result.price  =arg.price;
+		result.price = arg.price;
 		result.quantity = arg.quantity;
 		result.sparePart_id = arg.sparePart.id;
 		return result;

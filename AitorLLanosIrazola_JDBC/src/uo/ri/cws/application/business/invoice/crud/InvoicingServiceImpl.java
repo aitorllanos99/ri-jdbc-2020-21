@@ -1,5 +1,6 @@
 package uo.ri.cws.application.business.invoice.crud;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -10,6 +11,7 @@ import uo.ri.cws.application.business.invoice.InvoicingService;
 import uo.ri.cws.application.business.invoice.InvoicingWorkOrderDto;
 import uo.ri.cws.application.business.invoice.PaymentMeanDto;
 import uo.ri.cws.application.business.invoice.crud.commands.WorkOrdersBilling;
+import uo.ri.cws.application.business.util.command.CommandExecutor;
 
 /**
  * Capa de servicio de los invoice
@@ -18,12 +20,17 @@ import uo.ri.cws.application.business.invoice.crud.commands.WorkOrdersBilling;
  *
  */
 public class InvoicingServiceImpl implements InvoicingService {
+
+	private CommandExecutor executor = new CommandExecutor();
+
 	/**
 	 * Capa de servicio de la creacion de invoice para unas ordenes de trabajo
+	 * 
+	 * @throws SQLException
 	 */
 	@Override
 	public InvoiceDto createInvoiceFor(List<String> workOrderIds) throws BusinessException {
-		return new WorkOrdersBilling(workOrderIds).execute();
+		return executor.execute(new WorkOrdersBilling(workOrderIds));
 	}
 
 	@Override

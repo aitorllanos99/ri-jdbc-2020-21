@@ -11,7 +11,7 @@ public class SettleInvoiceAction implements Action {
 	 *  - Ask user invoice number 
 	 *  - Retrieve invoice info
 	 *  - Display invoice info
-	 *  - Check is unpaid (status <> 'PAID')
+	 *  - Check is unpaid (status 'PAID')
 	 *  - List payment methods accepted for the customer
 	 *  - Ask user to type amount to charge in each payment method
 	 *  	Check that sum of amounts equals invoice amount
