@@ -196,6 +196,18 @@ public class DtoMapper {
 			result.add(toDto(mr));
 		return result;
 	}
+	
+
+	public static SupplyRecord toRecord(SupplyDto arg) {
+		SupplyRecord result = new SupplyRecord();
+		result.id = arg.id;
+		result.price = arg.price;
+		result.deliveryTerm = arg.deliveryTerm;
+		result.providerId = arg.provider.id;
+		result.sparePartId = arg.sparePart.id;
+		return result;
+	}
+
 
 	public static OrderedProviderDto toOrderProvider(SupplierProviderDto arg) {
 		OrderedProviderDto result = new OrderedProviderDto();

@@ -14,5 +14,7 @@ public interface InterventionGateway extends Gateway<InterventionRecord> {
 	 * @throws SQLException 
 	 */
 	List<InterventionRecord> findByMechanicId(String id) throws SQLException;
+	
+	
 
 }

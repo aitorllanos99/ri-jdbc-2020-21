@@ -28,8 +28,26 @@ public class SupplyGatewayImpl implements SupplyGateway {
 	}
 
 	@Override
-	public void update(SupplyRecord t) throws SQLException {
-		// TODO Auto-generated method stub
+	public void update(SupplyRecord supply) throws SQLException {
+		// Process
+				Connection c = null;
+				PreparedStatement pst = null;
+				try {
+					c = Jdbc.getCurrentConnection();
+
+					pst = c.prepareStatement(Conf.getInstance().getProperty("TSPUPPLIES_UPDATE"));
+					pst.setInt(1, supply.deliveryTerm);
+					pst.setDouble(2, supply.price);
+					pst.setString(3, supply.providerId);
+					pst.setString(4, supply.sparePartId);
+				
+					pst.executeUpdate();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				} finally {
+					Jdbc.close(pst);
+				}
 
 	}
 

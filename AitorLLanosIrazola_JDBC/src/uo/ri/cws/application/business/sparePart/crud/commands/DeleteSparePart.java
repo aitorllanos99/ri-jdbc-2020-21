@@ -5,26 +5,34 @@ import java.sql.SQLException;
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;
+import uo.ri.cws.application.persistence.orderline.OrderLineGateway;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
+import uo.ri.cws.application.persistence.substitution.SubstitutionGateway;
 
 public class DeleteSparePart implements Command<Void> {
 
 	private String code;
+
 	public DeleteSparePart(String code) {
 		this.code = code;
 	}
+
 	@Override
 	public Void execute() throws BusinessException, SQLException {
 		SparePartGateway spg = PersistenceFactory.forSparePart();
-		//OrderGateway og = PersistenceFactory.forOrder();
-		if(code == null || code.isEmpty())
+		OrderLineGateway olg = PersistenceFactory.forOrderLine();
+		SubstitutionGateway ig = PersistenceFactory.forSubstitution();
+
+		if (code == null || code.isEmpty())
 			throw new BusinessException("[Delete Sparepart] The code must have a value");
-		if(!spg.findByCode(code).isPresent())
+		if (!spg.findByCode(code).isPresent())
 			throw new BusinessException("[Delete Sparepart] There isnt any sparepart with that code " + code);
-		//TODO: Check if there is in any substitution
-	
-		//TODO: Check if there is in any order
-		//if(og.findBySparePart(code))
+
+		if (!ig.findBySparePart(spg.findByCode(code).get().id).isEmpty())
+			throw new BusinessException("[Delete Sparepart] This sparepart has substitutions actives");
+
+		if (olg.findBySparePartId(spg.findByCode(code).get().id).isPresent())
+			throw new BusinessException("[Delete Sparepart] This sparepart has orders actives");
 		spg.remove(code);
 		return null;
 	}

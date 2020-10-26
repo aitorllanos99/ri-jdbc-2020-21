@@ -12,6 +12,7 @@ import uo.ri.cws.application.persistence.order.OrderRecord;
 import uo.ri.cws.application.persistence.orderline.OrderLineRecord;
 import uo.ri.cws.application.persistence.provider.ProviderRecord;
 import uo.ri.cws.application.persistence.sparepart.SparePartRecord;
+import uo.ri.cws.application.persistence.substitution.SubstitutionRecord;
 import uo.ri.cws.application.persistence.supply.SupplyRecord;
 import uo.ri.cws.application.persistence.workorder.WorkOrderRecord;
 
@@ -164,5 +165,23 @@ public class RecordAssembler {
 		}
 		return res;
 	}
+	
+	public static SubstitutionRecord toSubstitutionRecord(ResultSet rs) throws SQLException {
+		SubstitutionRecord result  =  new SubstitutionRecord();
+		result.id = rs.getString("id");
+		result.quantity = rs.getInt("quantity");
+		result.interventionId = rs.getString("intervention_id");
+		result.sparepartId = rs.getString("sparepart_id");
+		return result;
+	}
 
+	
+
+	public static List<SubstitutionRecord> toSubstitutionRecordList(ResultSet rs) throws SQLException {
+		List<SubstitutionRecord> res = new ArrayList<SubstitutionRecord>();
+		while (rs.next()) {
+			res.add(toSubstitutionRecord(rs));
+		}
+		return res;
+	}
 }
