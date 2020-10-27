@@ -24,6 +24,8 @@ public class FindByDescription implements Command<List<SparePartReportDto>> {
 
 	@Override
 	public List<SparePartReportDto> execute() throws BusinessException, SQLException {
+		if (description == null || description.isEmpty() || description.isBlank())
+			throw new IllegalArgumentException("[Update Sparepart] The description must have a value");
 		SparePartGateway spg = PersistenceFactory.forSparePart();
 		OrderLineGateway olg = PersistenceFactory.forOrderLine();
 		List<SparePartReportDto> list = DtoMapper.toDtoListSparePart(spg.findByDescritpion(description));

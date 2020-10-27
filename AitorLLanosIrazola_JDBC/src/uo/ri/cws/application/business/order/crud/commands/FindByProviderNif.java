@@ -26,10 +26,12 @@ public class FindByProviderNif implements Command<List<OrderDto>> {
 
 	@Override
 	public List<OrderDto> execute() throws BusinessException, SQLException {
+		if (nif == null || nif.isEmpty() || nif.isBlank())
+			throw new IllegalArgumentException("[Order - Find By Provider nif] The code must have a value");
 		OrderGateway og = PersistenceFactory.forOrders();
 		List<OrderDto> list = DtoMapper.toDtoListOrderDto(og.findByProviderNif(nif));
 		if (list == null || list.isEmpty())
-			throw new BusinessException("[Order - Find By Provider Nif] There is no orders with that nif");
+			throw new IllegalArgumentException("[Order - Find By Provider Nif] There is no orders with that nif");
 		list.forEach(c -> c.provider.nif = nif);
 		return list;
 	}

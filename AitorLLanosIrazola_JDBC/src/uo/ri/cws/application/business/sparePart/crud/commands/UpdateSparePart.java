@@ -35,10 +35,12 @@ public class UpdateSparePart implements Command<Void> {
 		SparePartGateway spg = PersistenceFactory.forSparePart();
 		SupplyGateway sg = PersistenceFactory.forSupply();
 
-		if (dto.code == null || dto.code.isEmpty())
-			throw new BusinessException("[Update Sparepart] The code must have a value");
+		if (dto.code == null || dto.code.isEmpty() ||dto.code.isBlank())
+			throw new IllegalArgumentException("[Update Sparepart] The code must have a value");
 		if (!spg.findByCode(dto.code).isPresent())
 			throw new BusinessException("[Update Sparepart] There isnt any sparepart with that code " + dto.code);
+		if (dto.description == null || dto.description.isEmpty() || dto.description.isBlank())
+			throw new BusinessException("[Update Sparepart] The description must have a value");
 		if (dto.maxStock < dto.minStock)
 			throw new BusinessException("[Update Sparepart] The maxStock must be higher than the minStock");
 		if (dto.stock < 0)

@@ -32,7 +32,7 @@ public class AddSparePart implements Command<String> {
 			throw new BusinessException("[Add SparePart] The code must have a value");
 		if (spg.findByCode(dto.code).isPresent())
 			throw new BusinessException("[Add SparePart] There is a sparepart with this code " + dto.code);
-		if (dto.description == null || dto.description.isEmpty() || dto.code.isBlank())
+		if (dto.description == null || dto.description.isEmpty() || dto.description.isBlank())
 			throw new BusinessException("[Add SparePart] The description must have a value");
 		if (dto.maxStock < dto.minStock)
 			throw new BusinessException("[Add SparePart] The maxStock must be higher than the minStock");

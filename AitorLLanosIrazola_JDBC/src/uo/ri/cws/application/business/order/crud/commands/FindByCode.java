@@ -34,7 +34,8 @@ public class FindByCode implements Command<Optional<OrderDto>> {
 		ProviderGateway pg = PersistenceFactory.forProvider();
 		OrderLineGateway olg = PersistenceFactory.forOrderLine();
 		SparePartGateway spg = PersistenceFactory.forSparePart();
-		
+		if (code == null || code.isEmpty() || code.isBlank())
+			throw new IllegalArgumentException("[Find By Code Order] The code must have a value");
 		
 		OrderDto dto = DtoMapper.toDto(og.findByCode(code).get());
 		ProviderDto pdto = DtoMapper.toDto(pg.findById(dto.provider.id).get());

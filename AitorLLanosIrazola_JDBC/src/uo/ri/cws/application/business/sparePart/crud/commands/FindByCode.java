@@ -25,8 +25,8 @@ public class FindByCode implements Command<Optional<SparePartDto>> {
 	@Override
 	public Optional<SparePartDto> execute() throws BusinessException, SQLException {
 		SparePartGateway spg = PersistenceFactory.forSparePart();
-		if (code == null || code.isEmpty())
-			throw new BusinessException("[Find By Code Sparepart] The code must have a value");
+		if (code == null || code.isEmpty() || code.isBlank())
+			throw new IllegalArgumentException("[Find By Code Sparepart] The code must have a value");
 		
 		return DtoMapper.toDtoSparePartDto(spg.findByCode(code));
 	}

@@ -11,6 +11,7 @@ import uo.ri.cws.application.persistence.orderline.OrderLineGateway;
 import uo.ri.cws.application.persistence.orderline.OrderLineRecord;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
 import uo.ri.cws.application.persistence.substitution.SubstitutionGateway;
+import uo.ri.cws.application.persistence.supply.SupplyGateway;
 /**
  * Comando de ejecucion de la logica de borrar repuesto
  * @author aitor
@@ -30,6 +31,7 @@ public class DeleteSparePart implements Command<Void> {
 		OrderLineGateway olg = PersistenceFactory.forOrderLine();
 		SubstitutionGateway ig = PersistenceFactory.forSubstitution();
 		OrderGateway og = PersistenceFactory.forOrders();
+		SupplyGateway sg = PersistenceFactory.forSupply();
 		if (code == null || code.isEmpty())
 			throw new BusinessException("[Delete Sparepart] The code must have a value");
 		if (!spg.findByCode(code).isPresent())
@@ -37,7 +39,8 @@ public class DeleteSparePart implements Command<Void> {
 
 		if (!ig.findBySparePart(spg.findByCode(code).get().id).isEmpty())
 			throw new BusinessException("[Delete Sparepart] This sparepart has substitutions actives");
-
+		if(sg.findBySparePartId(spg.findByCode(code).get().id).isEmpty())
+			throw new BusinessException("[Delete Sparepart] This sparepart has suppliers");
 		
 		List<OrderLineRecord> idToCheck = olg.findBySparePartId(spg.findByCode(code).get().id);
 		for(OrderLineRecord o: idToCheck)
