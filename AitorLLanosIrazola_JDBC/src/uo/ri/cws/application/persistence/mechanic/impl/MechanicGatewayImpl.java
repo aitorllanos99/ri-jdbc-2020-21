@@ -12,9 +12,15 @@ import uo.ri.cws.application.persistence.mechanic.MechanicGateway;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
 import uo.ri.cws.application.persistence.util.Conf;
 import uo.ri.cws.application.persistence.util.RecordAssembler;
-
+/**
+ * Coleccion de metodos de interaccion con la base de datos
+ * @author aitor
+ *
+ */
 public class MechanicGatewayImpl implements MechanicGateway {
-
+	/**
+	 * Comando de persistencia de añadir mecanico
+	 */
 	@Override
 	public void add(MechanicRecord mechanic) throws SQLException {
 		// Process
@@ -39,6 +45,9 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 	}
 
+	/**
+	 * Comando de persistencia de borrar mecanico
+	 */
 	@Override
 	public void remove(String id) throws SQLException {
 		Connection c = null;
@@ -58,6 +67,9 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 	}
 
+	/**
+	 * Comando de persistencia de actualizar mecanico
+	 */
 	@Override
 	public void update(MechanicRecord mechanic) throws SQLException {
 		// Process
@@ -80,6 +92,9 @@ public class MechanicGatewayImpl implements MechanicGateway {
 		}
 	}
 
+	/**
+	 * Comando de persistencia de buscar mecanicos por el identificador
+	 */
 	@Override
 	public Optional<MechanicRecord> findById(String id) throws SQLException {
 		// Process
@@ -93,18 +108,20 @@ public class MechanicGatewayImpl implements MechanicGateway {
 			pst.setString(1, id);
 
 			rs = pst.executeQuery();
-			if(rs.next())
+			if (rs.next())
 				return Optional.of(RecordAssembler.toMechanicRecord(rs));
 			return Optional.ofNullable(null);
-			
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			Jdbc.close(rs,pst);
+			Jdbc.close(rs, pst);
 		}
 	}
 
+	/**
+	 * Comando de persistencia de listar todos los mecanicos
+	 */
 	@Override
 	public List<MechanicRecord> findAll() throws SQLException {
 		Connection c = null;
@@ -124,6 +141,9 @@ public class MechanicGatewayImpl implements MechanicGateway {
 		}
 	}
 
+	/**
+	 * Comando de persistencia de buscar por dni
+	 */
 	@Override
 	public Optional<MechanicRecord> findByDni(String dni) throws SQLException {
 		// Process
@@ -137,15 +157,14 @@ public class MechanicGatewayImpl implements MechanicGateway {
 			pst.setString(1, dni);
 
 			rs = pst.executeQuery();
-			if(rs.next())
+			if (rs.next())
 				return Optional.of(RecordAssembler.toMechanicRecord(rs));
 			return Optional.ofNullable(null);
-			
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			Jdbc.close(rs,pst);
+			Jdbc.close(rs, pst);
 		}
 	}
 

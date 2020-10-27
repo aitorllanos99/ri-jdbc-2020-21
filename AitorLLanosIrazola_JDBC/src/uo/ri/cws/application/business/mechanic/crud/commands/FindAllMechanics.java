@@ -9,7 +9,11 @@ import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;
 import uo.ri.cws.application.persistence.mechanic.MechanicGateway;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
-
+/**
+ * Comando de logica de listar todos los mecanicos
+ * @author aitor
+ *
+ */
 public class FindAllMechanics implements Command<List<MechanicDto>> {
 
 	public List<MechanicDto> execute() throws SQLException {

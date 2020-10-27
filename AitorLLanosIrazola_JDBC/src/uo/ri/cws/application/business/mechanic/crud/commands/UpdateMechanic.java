@@ -7,7 +7,11 @@ import uo.ri.cws.application.business.util.DtoMapper;
 import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;
 import uo.ri.cws.application.persistence.mechanic.MechanicGateway;
-
+/**
+ * Comando de logica de actualizar mecanico
+ * @author aitor
+ *
+ */
 public class UpdateMechanic implements Command<Void> {
 	private MechanicDto dto;
 

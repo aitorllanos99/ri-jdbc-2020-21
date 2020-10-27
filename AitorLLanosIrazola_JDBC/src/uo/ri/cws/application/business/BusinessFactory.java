@@ -6,73 +6,63 @@ import uo.ri.cws.application.business.invoice.crud.InvoicingServiceImpl;
 //import uo.ri.cws.application.business.invoice.create.CreateInvoiceServiceImpl;
 import uo.ri.cws.application.business.mechanic.MechanicCrudService;
 import uo.ri.cws.application.business.mechanic.crud.MechanicCrudServiceImpl;
+import uo.ri.cws.application.business.order.OrdersService;
+import uo.ri.cws.application.business.order.crud.OrdersServiceImpl;
+import uo.ri.cws.application.business.provider.ProvidersCrudService;
+import uo.ri.cws.application.business.sparepart.SparePartCrudService;
+import uo.ri.cws.application.business.sparepart.SparePartReportService;
+import uo.ri.cws.application.business.sparepart.crud.SparePartCrudServiceImpl;
+import uo.ri.cws.application.business.sparepart.report.SparePartReportServiceImpl;
+import uo.ri.cws.application.business.supply.SuppliesCrudService;
 
+/**
+ * Factoria de creacion de las capas de servicio
+ * 
+ * @author aitor
+ *
+ */
 public class BusinessFactory {
 
-
+	/**
+	 * Creacion de la capa de servicio de la capa de servicio de los mecanicos
+	 * 
+	 * @return la capa de servicio implementada de los mecanicos
+	 */
 	public static MechanicCrudService forMechanicCrudService() {
 		return new MechanicCrudServiceImpl();
 	}
 
 	public static InvoicingService forCreateInvoiceService() {
-	return new InvoicingServiceImpl();
+		return new InvoicingServiceImpl();
 	}
-//
-//	public static WorkOrderCrudService forWorkOrderService() {
-//		throw new RuntimeException("Not yet implemented");
-//	}
-//
-//	public static CloseWorkOrderService forClosingBreakdown() {
-//		throw new RuntimeException("Not yet implemented");
-//	}
-//
-//	public static VehicleCrudService forVehicleCrudService() {
-//		throw new RuntimeException("Not yet implemented");
-//	}
-//
-//	public static CourseCrudService forCourseCrudService() {
-//		throw new RuntimeException("Not yet implemented");
-//	}
-//
-//	public static CourseAttendanceService forCourseAttendanceService() {
-//		throw new RuntimeException("Not yet implemented");
-//	}
-//
-//	public static CourseReportService forCourseReportService() {
-//		throw new RuntimeException("Not yet implemented");
-//	}
-//
-//	public static CertificateService forCertificateService() {
-//		throw new RuntimeException("Not yet implemented");
-//	}
-//
-//	public static VehicleTypeCrudService forVehicleTypeCrudService() {
-//		throw new RuntimeException("Not yet implemented");
-//	}
-//
-//	public static AssignWorkOrderService forAssignWorkOrderService() {
-//		return new AssignWorkOrderServiceImpl();
-//	}
-//
-//	public static ClientCrudService forClientCrudService() {
-//		throw new RuntimeException("Not yet implemented");
-//	}
-//
-//	public static SparePartCrudService forSparePartCrudService() {
-//		throw new RuntimeException("Not yet implemented");
-//	}
-//
-//	public static SettleInvoiceService forSettleInvoiceService() {
-//		throw new RuntimeException("Not yet implemented");
-//	}
-//
-//	public static ClientHistoryService forClientHistoryService() {
-//		throw new RuntimeException("Not yet implemented");
-//	}
-//
-//	public static ViewAssignedWorkOrdersService forViewAssignedWorkOrdersService() {
-//		throw new RuntimeException("Not yet implemented");
-//	}
+	/**
+	 * Creacion de la capa de servicio de la capa de servicio de los repuestos
+	 * @return la capa de servicio implementada de los repuestos
+	 */
+	public static SparePartCrudService forSparePartCrudService() {
+		return new SparePartCrudServiceImpl();
+	}
+	/**
+	 * Creacion de la capa de servicio de la capa de servicio de los pedidos
+	 * @return la capa de servicio implementada de los pedidos
+	 */
+	public static OrdersService forOrdersService() {
+		return new OrdersServiceImpl();
+	}
+
+	public static ProvidersCrudService forProvidersService() {
+		return null;
+	}
+
+	public static SuppliesCrudService forSuppliesCrudService() {
+		return null;
+	}
+	/**
+	 * Creacion de la capa de servicio de la capa de servicio de los report de repuestos
+	 * @return la capa de servicio implementada de los reports de repuestos
+	 */
+	public static SparePartReportService forSparePartReportService() {
+		return new SparePartReportServiceImpl();
+	}
 
 }
-
