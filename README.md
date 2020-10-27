@@ -3,10 +3,11 @@
 - Subject: Repositorios de Informacion.
 - Practice: 1, JDBC.
 - Year: September-October, 2020.
-This repository is intended to be in english, but it can have some words in spanish, this should be changed.
+
+*This repository is intended to be in english, but it can have some words in spanish, this should be changed.
 
 
-If you want to use it, feel free, but always under your responsability.
+*If you want to use it, feel free, but always under your responsability.
 
 
 - Mark:.
