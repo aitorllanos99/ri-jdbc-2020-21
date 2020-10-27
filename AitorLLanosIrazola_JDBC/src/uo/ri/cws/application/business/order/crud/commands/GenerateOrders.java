@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -58,9 +57,18 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 		List<OrderDto> ordersToPrint = new ArrayList<OrderDto>();
 		for (SparePartReportDto sprd : listUnderStock) {
 			// Check there isnt a orderline with this sparepart that is in order 2
-			Optional<OrderLineRecord> idToCheck = olg.findBySparePartId(sprd.id);
-			if (idToCheck.isPresent()) {
-				if (og.findById(idToCheck.get().order_id).isEmpty()) {
+			List<OrderLineRecord> idToCheck = olg.findBySparePartId(sprd.id);
+			if (!idToCheck.isEmpty()) {
+				List<OrderRecord> ordersInRecieved = new ArrayList<OrderRecord>();
+				for(OrderLineRecord o: idToCheck)
+					if(!og.findById(o.order_id).get().status.contentEquals("PENDING")) //Con que haya una en pending no se hace el pedido
+						ordersInRecieved.add(og.findById(o.order_id).get());
+					else {
+						ordersInRecieved.clear();	
+						break;
+					}
+				
+				if (!ordersInRecieved.isEmpty()) {
 					OrderDto odto = new OrderDto();
 					odto.id = UUID.randomUUID().toString();
 					odto.code = UUID.randomUUID().toString();
@@ -100,7 +108,7 @@ public class GenerateOrders implements Command<List<OrderDto>> {
 				old.sparePart = DtoMapper.toOrderedSpare(sprd);
 
 				old.quantity = sprd.maxStock - sprd.stock; // Las necesarias para llenar el stock
-				odto.amount = old.price * old.quantity;
+	
 				odto.lines.add(old);
 				if (selectProvider(sdtos, sprd.id) != null) { // Si tiene proveedor se añade sino no
 					odto.provider = DtoMapper.toOrderProvider(selectProvider(sdtos, sprd.id));

@@ -1,5 +1,6 @@
 package uo.ri.cws.application.persistence.orderline;
 
+import java.util.List;
 import java.util.Optional;
 
 import uo.ri.cws.application.persistence.Gateway;
@@ -11,7 +12,7 @@ public interface OrderLineGateway extends Gateway<OrderLineRecord> {
 	 * @param id the id of the sparepart
 	 * @return optional with a orderlinerecord if its found null if not
 	 */
-	Optional<OrderLineRecord> findBySparePartId(String id);
+	List<OrderLineRecord> findBySparePartId(String id);
 	
 	/**
 	 * Find a OrderLine from the order id
@@ -19,4 +20,7 @@ public interface OrderLineGateway extends Gateway<OrderLineRecord> {
 	 * @return optional with a orderlinerecord if its found null if not
 	 */
 	Optional<OrderLineRecord> findByOrderId(String id);
+	
+	
+	
 }

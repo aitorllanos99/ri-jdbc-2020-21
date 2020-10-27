@@ -61,7 +61,7 @@ public class SubstitutionGatewayImpl implements SubstitutionGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(Conf.getInstance().getProperty("TSUBSTITUTION_FINDBYSPAREPARTID"));
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TSUBSTITUTIONS_FINDBYSPAREPARTID"));
 			pst.setString(1, id);
 
 			list = RecordAssembler.toSubstitutionRecordList(pst.executeQuery());

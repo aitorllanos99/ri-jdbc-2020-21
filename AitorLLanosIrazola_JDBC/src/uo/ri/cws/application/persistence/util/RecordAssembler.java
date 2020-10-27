@@ -116,6 +116,15 @@ public class RecordAssembler {
 		result.quantity = rs.getInt("quantity");
 		return result;
 	}
+	
+
+	public static List<OrderLineRecord> toOrderLineRecordList(ResultSet rs) throws SQLException {
+		List<OrderLineRecord> res = new ArrayList<>();
+		while (rs.next()) {
+			res.add(toOrderLineRecord(rs));
+		}
+		return res;
+	}
 
 	public static SupplyRecord toSupplyRecord(ResultSet rs) throws SQLException {
 		SupplyRecord result = new SupplyRecord();
@@ -152,7 +161,6 @@ public class RecordAssembler {
 		result.amount = rs.getDouble("amount");
 		result.providerId = rs.getString("provider_id");
 		result.orderedDate = rs.getDate("orderedDate").toLocalDate();
-		result.receptionDate = rs.getDate("receptionDate").toLocalDate();
 		result.status = rs.getString("status");
 		return result;
 	}

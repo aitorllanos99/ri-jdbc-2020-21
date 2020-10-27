@@ -30,7 +30,7 @@ public class FindByCode implements Command<Optional<SparePartReportDto>> {
 		if (code == null || code.isEmpty())
 			throw new BusinessException("[Find By Code Sparepart] The code must have a value");
 		SparePartReportDto dto = DtoMapper.toDtoSparePartRecord(spg.findByCode(code)).get();
-		dto.totalUnitsSold = olg.findBySparePartId(dto.id).isPresent() ? olg.findBySparePartId(dto.id).get().quantity : 0;
+		dto.totalUnitsSold = !olg.findBySparePartId(dto.id).isEmpty() ? olg.findBySparePartId(dto.id).get(0).quantity : 0;
 		return Optional.of(dto);
 	}
 }

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,23 +71,22 @@ public class OrderLineGatewayImpl implements OrderLineGateway {
 	 * Comando de persistencia de buscar orderline por identificador de repuesto
 	 */
 	@Override
-	public Optional<OrderLineRecord> findBySparePartId(String id) {
+	public List<OrderLineRecord> findBySparePartId(String id) {
 		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
+		List<OrderLineRecord> list = new ArrayList<OrderLineRecord>();
 		try {
 			c = Jdbc.getCurrentConnection();
 			pst = c.prepareStatement(Conf.getInstance().getProperty("TORDERLINES_FINDBYSPAREPARTID"));
 			pst.setString(1, id);
 
-			rs = pst.executeQuery();
-			if (rs.next())
-				return Optional.of(RecordAssembler.toOrderLineRecord(rs));
-			return Optional.ofNullable(null);
+			list = RecordAssembler.toOrderLineRecordList(pst.executeQuery());
+			return list;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			Jdbc.close(pst);
+			Jdbc.close(rs,pst);
 		}
 	}
 
@@ -110,8 +110,9 @@ public class OrderLineGatewayImpl implements OrderLineGateway {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			Jdbc.close(pst);
+			Jdbc.close(rs,pst);
 		}
 	}
+
 
 }

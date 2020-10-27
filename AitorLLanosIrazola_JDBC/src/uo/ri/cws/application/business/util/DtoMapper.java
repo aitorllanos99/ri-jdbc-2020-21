@@ -16,6 +16,7 @@ import uo.ri.cws.application.business.order.OrderDto.OrderedSpareDto;
 import uo.ri.cws.application.business.provider.ProviderDto;
 import uo.ri.cws.application.business.sparepart.SparePartDto;
 import uo.ri.cws.application.business.sparepart.SparePartReportDto;
+import uo.ri.cws.application.business.substitution.SubstitutionDto;
 import uo.ri.cws.application.business.supply.SupplyDto;
 import uo.ri.cws.application.business.supply.SupplyDto.SupplierProviderDto;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
@@ -24,6 +25,7 @@ import uo.ri.cws.application.persistence.order.OrderRecord;
 import uo.ri.cws.application.persistence.orderline.OrderLineRecord;
 import uo.ri.cws.application.persistence.provider.ProviderRecord;
 import uo.ri.cws.application.persistence.sparepart.SparePartRecord;
+import uo.ri.cws.application.persistence.substitution.SubstitutionRecord;
 import uo.ri.cws.application.persistence.supply.SupplyRecord;
 
 public class DtoMapper {
@@ -263,5 +265,19 @@ public class DtoMapper {
 		result.sparePart_id = arg.sparePart.id;
 		return result;
 	}
-
+	
+	public static SubstitutionDto toDto(SubstitutionRecord arg) {
+		SubstitutionDto result = new SubstitutionDto();
+		result.id = arg.id;
+		result.intervention.id = arg.interventionId;
+		result.sparepart.id = arg.sparepartId;
+		result.quantity = arg.quantity;
+		return result;
+	}
+	public static List<SubstitutionDto> toDtoListSubstitutionDto(List<SubstitutionRecord> arg) {
+		List<SubstitutionDto> result = new ArrayList<SubstitutionDto>();
+		for (SubstitutionRecord mr : arg)
+			result.add(toDto(mr));
+		return result;
+	}
 }
