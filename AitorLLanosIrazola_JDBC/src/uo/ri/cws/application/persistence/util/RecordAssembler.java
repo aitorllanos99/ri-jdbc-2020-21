@@ -161,6 +161,8 @@ public class RecordAssembler {
 		result.amount = rs.getDouble("amount");
 		result.providerId = rs.getString("provider_id");
 		result.orderedDate = rs.getDate("orderedDate").toLocalDate();
+		if(rs.getDate("receptionDate") != null)
+			result.receptionDate = rs.getDate("receptionDate").toLocalDate();
 		result.status = rs.getString("status");
 		return result;
 	}
