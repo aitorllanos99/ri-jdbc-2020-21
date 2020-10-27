@@ -29,7 +29,8 @@ public class FindByDescription implements Command<List<SparePartReportDto>> {
 		SparePartGateway spg = PersistenceFactory.forSparePart();
 		OrderLineGateway olg = PersistenceFactory.forOrderLine();
 		List<SparePartReportDto> list = DtoMapper.toDtoListSparePart(spg.findByDescritpion(description));
-		list.forEach(c -> {c.totalUnitsSold =  !olg.findBySparePartId(c.id).isEmpty() ? olg.findBySparePartId(c.id).get(0).quantity : 0;});
+		list.forEach(c -> {c.totalUnitsSold = !olg.findBySparePartId(c.id).isEmpty() ? olg.findBySparePartId(c.id).stream().mapToInt(o -> o.quantity).reduce((o1,o2) -> o1+o2).getAsInt(): 0;});
+		
 		return list;
 	}
 

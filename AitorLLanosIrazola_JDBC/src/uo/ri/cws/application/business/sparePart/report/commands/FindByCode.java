@@ -29,8 +29,10 @@ public class FindByCode implements Command<Optional<SparePartReportDto>> {
 		OrderLineGateway olg = PersistenceFactory.forOrderLine();
 		if (code == null || code.isEmpty() || code.isBlank())
 			throw new IllegalArgumentException("[Find By Code Sparepart] The code must have a value");
+		if(spg.findByCode(code).isEmpty())
+				throw new IllegalArgumentException("[Find By Code Sparepart] The code doesnt belong to a real sparepart");
 		SparePartReportDto dto = DtoMapper.toDtoSparePartRecord(spg.findByCode(code)).get();
-		dto.totalUnitsSold = !olg.findBySparePartId(dto.id).isEmpty() ? olg.findBySparePartId(dto.id).get(0).quantity : 0;
+		dto.totalUnitsSold = !olg.findBySparePartId(dto.id).isEmpty() ? olg.findBySparePartId(dto.id).stream().mapToInt(o -> o.quantity).reduce((o1,o2) -> o1+o2).getAsInt(): 0;
 		return Optional.of(dto);
 	}
 }

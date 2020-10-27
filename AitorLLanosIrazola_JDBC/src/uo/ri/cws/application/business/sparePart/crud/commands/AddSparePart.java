@@ -34,8 +34,7 @@ public class AddSparePart implements Command<String> {
 			throw new BusinessException("[Add SparePart] There is a sparepart with this code " + dto.code);
 		if (dto.description == null || dto.description.isEmpty() || dto.description.isBlank())
 			throw new BusinessException("[Add SparePart] The description must have a value");
-		if (dto.maxStock < dto.minStock)
-			throw new BusinessException("[Add SparePart] The maxStock must be higher than the minStock");
+
 		if (dto.stock < 0)
 			throw new BusinessException("[Add SparePart] The stock must be higher than 0");
 		if (dto.minStock < 0)
@@ -44,6 +43,8 @@ public class AddSparePart implements Command<String> {
 			throw new BusinessException("[Add SparePart] The maxStock must be higher than 0");
 		if (dto.price < 0)
 			throw new BusinessException("[Add SparePart] The price must be higher than 0");
+		if (dto.maxStock < dto.minStock)
+			throw new BusinessException("[Add SparePart] The maxStock must be higher than the minStock");
 		spg.add(DtoMapper.toRecord(dto));
 
 		return dto.id;

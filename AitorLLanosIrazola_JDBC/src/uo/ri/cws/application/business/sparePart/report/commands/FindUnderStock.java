@@ -25,7 +25,7 @@ public class FindUnderStock implements Command<List<SparePartReportDto>> {
 		OrderLineGateway olg = PersistenceFactory.forOrderLine();
 		List<SparePartReportDto> list = DtoMapper.toDtoListSparePart(spg.findUnderStock());
 		list.forEach(c -> {
-			c.totalUnitsSold = !olg.findBySparePartId(c.id).isEmpty() ? olg.findBySparePartId(c.id).get(0).quantity : 0;
+			c.totalUnitsSold = !olg.findBySparePartId(c.id).isEmpty() ? olg.findBySparePartId(c.id).stream().mapToInt(o -> o.quantity).reduce((o1,o2) -> o1+o2).getAsInt(): 0;
 		});
 		return list;
 	}
